@@ -1,14 +1,169 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
+<html lang="sv">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> Foodtruck </title>
+    <link rel="stylesheet" href="CSS/style.css">
+    <script type="module" src="JS/app.js"></script>
+</head>
+<body>
+    <header class="header-background">
+        <h1> Välkommen till Yum yum gim me sum </h1>
+    </header>
 
-    </body>
+    <!-- Page 1 : Menu -->
+    <section class="page1-menu">
+        <div class="menu-container">
+            <h1 class="menu-title"> MENY </h1>
+            <!-- Part 1 : Foods -->
+            <div class="menu-section">
+                <ul class="menu-list">
+                    <li class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name"> KARLSTAD </span>
+                            <span class="item-price"> 9 SEK </span>
+                        </div>
+                        <p class="item-description"> kantarell, schalottenlök, morot, bladpersilja </p>
+                    </li>
+                    <li class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name"> BANGKOK </span>
+                            <span class="item-price"> 9 SEK </span>
+                        </div>
+                        <p class="item-description"> morot, salladslök, chili, kokos, lime, koriander </p>
+                    </li>
+                    <li class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name"> HO CHI MINH </span>
+                            <span class="item-price"> 9 SEK </span>
+                        </div>
+                        <p class="item-description"> kål, salladslök, chili, vitlök, ingefära, tofu </p>
+                    </li>
+                    <li class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name"> PARIS </span>
+                            <span class="item-price"> 9 SEK </span>
+                        </div>
+                        <p class="item-description"> kål, chèvre, honung, basilika, valnötspasta </p>
+                    </li>
+                    <li class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name"> OAXACA </span>
+                            <span class="item-price"> 9 SEK </span>
+                        </div>
+                        <p class="item-description"> majs, tomat, rostade ärtor, vitlök, lime </p>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Part 2 : Sauces -->
+            <div class="menu-section">
+                <div class="section-title">
+                    <span class="sauces"> DIPSÅS </span>
+                    <span class="sauces-price"> 19 SEK </span>
+                </div>
+                <div class="button-group">
+                    <button class="menu-button"> sweet chili </button>
+                    <button class="menu-button"> wonton std </button>
+                    <button class="menu-button"> sweet & sour </button>
+                    <button class="menu-button"> hot mango </button>
+                    <button class="menu-button"> chili mayo </button>
+                    <button class="menu-button"> guacamole </button>
+                </div>
+            </div>
+
+            <!-- Part 3 : Drinks -->
+            <div class="menu-section">
+                <div class="section-title">
+                    <span class="drinks"> DRICKA </span>
+                    <span class="drinks-price"> 19 SEK </span>
+                </div>
+                <div class="button-group">
+                    <button class="menu-button"> Fanta Orange </button>
+                    <button class="menu-button"> Fanta Exotic </button>
+                    <button class="menu-button"> Coca Cola </button>
+                    <button class="menu-button"> Sprite </button>
+                    <button class="menu-button"> LOKA Granatäpple </button>
+                    <button class="menu-button"> LOKA Citrus </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Page 2 : Shopping Cart -->
+    <section class="page2-shoppingCart">
+        <div class="cart-container">
+            <div class="cart-header">
+                <span class="shoppingCart-icon"><img src="IMG/shoppingCart.png" alt="shoppingCart"></span>
+            </div>
+            <ul class="cart-items">
+                <li class="cart-item">
+                    <span class="item-name"> <!-- Name of item --> </span> 
+                    <span class="item-price"> <!-- Price of item --> </span> SEK
+                    <div class="item-controls">
+                        <button class="control-button"> + </button> <!-- Add item button -->
+                        <span class="item-quantity"> <!-- Number of item --> </span> stycken
+                        <button class="control-button"> - </button>  <!-- Remove item button -->
+                    </div>
+                </li>
+            </ul>
+            <div class="cart-footer">
+                <div class="total">
+                    <span class="total-title"> TOTALT </span> 
+                    <span class="total-price"> <!-- Total price --> </span> SEK
+                    <span class="tax-info"> inkl 20% moms </span> <!-- Tax info -->
+                </div>
+                <button class="checkout-button"> TAKE MY MONEY! </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Page 3 : Order -->
+    <section class="page3-order">
+        <div class="container">
+            <div class="box">
+                <div class="image">
+                    <img src="IMG/boxtop.png" alt="boxtop">
+                </div>
+                <h1> DINA WONTONS TILLAGAS! </h1>
+                <p class="eta"> ETA 5 MIN </p> <!-- Estimated Time of Arrival -->
+                <p class="order-id"> <!-- Order code --> </p> 
+                <button class="receipt-button"> SE KVITTO </button> <!-- Button link to receipt -->
+                <button class="new-order-button"> GÖR EN NY BESTÄLLNING </button> <!-- Button link to take new order -->
+            </div>
+        </div>   
+    </section>
+
+    <!-- Page 4 : Receipt -->
+    <section class="page4-receipt">
+        <div class="receipt">
+            <div class="header">
+                <div class="logo"><img src="IMG/logo.jpg" alt="logo"></div>
+                <div class="receipt-number">
+                    <h2> KVITTO </h2>
+                    <p class="receipt-code"> <!-- Receipt code --> </p>
+                </div>
+            </div>
+            <div class="items">
+                <div class="item">
+                    <div class="item-details">
+                        <span class="item-name"> <!-- Item's name (choosen) --> </span> SEK 
+                    </div>
+                    <div class="item-quantity-container">
+                      <span class="item-quantity"> <!-- Number of item (choosen) --> </span> stycken
+                    </div>
+                </div>            
+                <div class="total">
+                  <div class="total-labels">
+                    <span> TOTALT </span>
+                    <span class="tax"> inkl 20% moms </span>
+                  </div>
+                  <span class="total-price"> <!-- Total price --> </span> SEK
+                </div>   
+            </div>
+            <button class="new-order-button"> GÖR EN NY BESTÄLLNING </button>
+        </div>
+    </section>    
+</body>
 </html>

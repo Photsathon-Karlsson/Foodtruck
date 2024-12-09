@@ -1,0 +1,403 @@
+/* General design */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #d9e7e4;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;   
+}
+.header-background {
+    background-image: url(../IMG/poster.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 200px;
+    color: white;
+    text-align: center;
+}
+.header-background h1 {
+    font-size: 3rem;
+    margin: 0;
+    background-color: #33333388;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+/* ********** Page 1 : Menu ********** */
+.page1-menu {
+    width: 100%;
+    display: grid;
+    place-items: center;
+    color: white;
+}
+.menu-container {
+    width: 360px;
+    background-color: #489078;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    margin: 20px;
+}
+.menu-title {
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #333;
+    color: white;
+    border-radius: 6px 6px 0 0;
+}
+.menu-section {
+    margin-bottom: 20px;
+}
+.menu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.menu-item {
+    background-color: #444;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.item-name {
+    font-weight: bold;
+    font-size: 16px;
+}
+.item-price {
+    font-size: 14px;
+}
+.item-description {
+    font-size: 12px;
+    margin-top: 5px;
+}
+.section-title {
+    font-size: x-large;
+    margin: 10px;
+}
+/* Button groups */
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.menu-button {
+    background-color: #444;
+    color: white;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+.menu-button:hover {
+    background-color: #555;
+}
+
+/* ********** Page 2 : Shopping Cart ********** */
+.page2-shoppingCart {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+.cart-container {
+    width: 300px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+.cart-header {
+    padding: 10px;
+    background-color: #f1f1f1;
+    text-align: right;
+}
+.shoppingCart-icon img {
+    width: 50px;
+    height: 50px;
+}
+.cart-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid #ddd;
+    margin: 10px;
+    padding: 10px;
+}
+.cart-footer {
+    padding: 15px;
+    background-color: #f1f1f1;
+    text-align: center;
+}
+.checkout-button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.checkout-button:hover {
+    background-color: #555;
+}
+.total {
+    background-color: lightgray;
+    padding: 10px;
+}
+
+/* ********** Page 3 : Order ********** */
+.page3-order .container {
+    background-color: #403d3d;
+    width: 320px;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    color: white;
+    line-height: 30px;
+}
+.image img {
+    width: 300px;
+    height: 200px;
+}
+.page3-order h1 {
+    font-size: 20px;
+}
+.page3-order .eta {
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+.page3-order button {
+    width: 100%;
+    padding: 10px 15px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.page3-order .receipt-button {
+    background-color: #403d3d;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border: 2px solid white;
+}
+.page3-order .new-order-button {
+    background-color: rgb(26, 23, 23);
+    color: white;
+    font-weight: bold;
+    padding: 15px;
+}
+
+
+/* ********** Page 4 : Receipt ********** */
+.page4-receipt {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.logo {
+    text-align: center;
+}
+.receipt {
+    width: 300px;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.receipt-number {
+    font-size: 16px;
+    color: #333;
+    font-weight: bold;
+    margin: 20px;
+    text-align: center;
+}
+.items {
+    text-align: left;
+    margin-bottom: 20px;
+}
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    border-bottom: 1px dashed #ccc;
+}
+.total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.new-order-button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    width: 100%;
+}
+.new-order-button:hover {
+    background-color: #555;
+}
+
+
+/* ********** Responsive Design ********** */
+
+/* Small Devices (Phones, 320px - 480px) */
+@media (max-width: 480px) {
+    .header-background {
+        height: 150px;
+    }
+    .header-background h1 {
+        font-size: 2rem;
+        padding: 10px;
+    }
+    .menu-container {
+        width: 90%; 
+        padding: 10px;
+    }
+    .menu-title {
+        font-size: 18px;
+        padding: 5px;
+    }
+    .menu-item {
+        padding: 8px;
+        margin-bottom: 8px;
+    }
+    .cart-container {
+        width: 90%; 
+    }
+    .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .page3-order .container {
+        width: 90%; 
+    }
+    .receipt {
+        width: 90%; 
+    }
+}
+
+/* Medium Devices (Tablets, 481px - 1024px) */
+@media (max-width: 1024px) {
+    .header-background {
+        height: 180px;
+    }
+    .header-background h1 {
+        font-size: 2.5rem;
+        padding: 15px;
+    }
+    .menu-container {
+        width: 80%; 
+        padding: 15px;
+    }
+    .menu-title {
+        font-size: 20px;
+        padding: 8px;
+    }
+    .menu-item {
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    .cart-container {
+        width: 75%; 
+    }
+    .page3-order .container {
+        width: 75%; 
+    }
+    .receipt {
+        width: 75%; 
+    }
+}
+
+/* Large Devices (Desktops, 1025px and above) */
+@media (min-width: 1025px) {
+    .header-background {
+        height: 250px;
+    }
+    .header-background h1 {
+        font-size: 3rem;
+        padding: 20px;
+    }
+    .menu-container {
+        width: 360px; 
+    }
+    .cart-container {
+        width: 300px; 
+    }
+    .page3-order .container {
+        width: 320px; 
+    }
+    .receipt {
+        width: 300px; 
+    }
+}
+
+/* Extra Large Devices (Wide Screens, 1440px and above) */
+@media (min-width: 1440px) {
+    .header-background {
+        height: 300px;
+    }
+    .header-background h1 {
+        font-size: 3.5rem;
+        padding: 25px;
+    }
+    .menu-container {
+        width: 400px;
+        padding: 25px;
+    }
+    .menu-title {
+        font-size: 24px;
+        padding: 10px;
+    }
+    .menu-item {
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+    .cart-container {
+        width: 350px; 
+    }
+    .page3-order .container {
+        width: 400px; 
+    }
+    .receipt {
+        width: 400px; 
+    }
+}
+
+
