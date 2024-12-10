@@ -42,7 +42,7 @@ function displayMenu(menu) {
 }
 
 // Function for adding products to the cart.
-let cart = [];
+/* let cart = [];
 
 function addToCart(event) {
     const button = event.target;
@@ -144,4 +144,4 @@ async function placeOrder() {
 document.querySelector('.checkout-button').addEventListener('click', placeOrder);
 
 // Call the fetchMenu function when the app loads.
-fetchMenu();
+fetchMenu(); */
