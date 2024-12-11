@@ -41,7 +41,7 @@ body {
     place-items: center;
     color: white;
 }
-.menu-container {
+#menu-container {
     width: 360px;
     background-color: #489078;
     border-radius: 8px;
