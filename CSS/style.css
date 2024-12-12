@@ -48,6 +48,7 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     padding: 20px;
     margin: 20px;
+    list-style-type: none;
 }
 .menu-title {
     font-size: 22px;
@@ -277,13 +278,13 @@ body {
 
 /* ********** Responsive Design ********** */
 
-/* Small Devices (Phones, 320px - 480px) */
-@media (max-width: 480px) {
+/* Extra Small Devices (Phones, 320px - 390px) */
+@media (max-width: 390px) {
     .header-background {
         height: 150px;
     }
     .header-background h1 {
-        font-size: 2rem;
+        font-size: 1.8rem;
         padding: 10px;
     }
     .menu-container {
@@ -291,7 +292,7 @@ body {
         padding: 10px;
     }
     .menu-title {
-        font-size: 18px;
+        font-size: 16px;
         padding: 5px;
     }
     .menu-item {
@@ -313,8 +314,40 @@ body {
     }
 }
 
+/* Small Devices (Phones, 391px - 480px) */
+@media (min-width: 391px) and (max-width: 480px) {
+    .header-background {
+        height: 160px;
+    }
+    .header-background h1 {
+        font-size: 2rem;
+        padding: 12px;
+    }
+    .menu-container {
+        width: 85%; 
+        padding: 12px;
+    }
+    .menu-title {
+        font-size: 18px;
+        padding: 6px;
+    }
+    .menu-item {
+        padding: 9px;
+        margin-bottom: 9px;
+    }
+    .cart-container {
+        width: 85%; 
+    }
+    .page3-order .container {
+        width: 85%; 
+    }
+    .receipt {
+        width: 85%; 
+    }
+}
+
 /* Medium Devices (Tablets, 481px - 1024px) */
-@media (max-width: 1024px) {
+@media (max-width: 1024px) and (min-width: 481px) {
     .header-background {
         height: 180px;
     }
@@ -368,36 +401,115 @@ body {
     }
 }
 
-/* Extra Large Devices (Wide Screens, 1440px and above) */
-@media (min-width: 1440px) {
+@media (max-width: 390px) {
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        padding: 10px;
+        align-items: stretch;
+    }
     .header-background {
-        height: 300px;
+        height: 150px;
     }
     .header-background h1 {
-        font-size: 3.5rem;
-        padding: 25px;
+        font-size: 2rem;
+        padding: 15px;
     }
-    .menu-container {
-        width: 400px;
-        padding: 25px;
+
+    /* Page 1: Menu */
+    .page1-menu {
+        padding: 0 10px;
+    }
+    #menu-container {
+        width: 100%;
+        padding: 15px;
+        margin: 10px 0;
     }
     .menu-title {
-        font-size: 24px;
-        padding: 10px;
+        font-size: 18px;
+        padding: 8px;
     }
     .menu-item {
-        padding: 15px;
-        margin-bottom: 15px;
+        padding: 8px;
+    }
+    .item-name {
+        font-size: 14px;
+    }
+    .item-price {
+        font-size: 12px;
+    }
+    .item-description {
+        font-size: 10px;
+    }
+    .menu-button {
+        font-size: 12px;
+        padding: 6px 8px;
+    }
+
+    /* Page 2: Shopping Cart */
+    .page2-shoppingCart {
+        padding: 10px;
     }
     .cart-container {
-        width: 350px; 
+        width: 100%;
     }
+    .cart-header {
+        font-size: 12px;
+        padding: 8px;
+    }
+    .cart-item {
+        padding: 8px;
+        font-size: 12px;
+    }
+    .checkout-button {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+    .total {
+        font-size: 12px;
+    }
+
+    /* Page 3: Order */
     .page3-order .container {
-        width: 400px; 
+        width: 100%;
+        padding: 15px;
+        margin: 10px 0;
+    }
+    .page3-order h1 {
+        font-size: 18px;
+    }
+    .page3-order .eta {
+        font-size: 14px;
+    }
+    .page3-order button {
+        padding: 8px 10px;
+        font-size: 14px;
+    }
+
+    /* Page 4: Receipt */
+    .page4-receipt {
+        padding: 10px;
     }
     .receipt {
-        width: 400px; 
+        width: 100%;
+        padding: 15px;
+    }
+    .receipt-number {
+        font-size: 14px;
+        margin: 10px 0;
+    }
+    .items {
+        font-size: 12px;
+    }
+    .item {
+        font-size: 12px;
+    }
+    .new-order-button {
+        font-size: 14px;
+        padding: 8px;
     }
 }
-
 
