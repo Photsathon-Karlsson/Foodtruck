@@ -17,13 +17,11 @@
         <div id="menu-container">
             <!-- Shopping cart Section -->
             <div id="cart-count">
-                <img src="IMG/shoppingCart.png" alt="shoppingCart"> 
+                <!-- Shopping Cart details button (Hide button) -->
+                <button id="cart-details-button" class="hidden"> 
+                <img src="IMG/shoppingCart.png" alt="shoppingCart"> </button>
                 <span id="cart-item-count"> 0 artiklar </span> <!-- Number of chosen items -->
             </div> 
-            
-            <!-- Shopping Cart details button (Hide button) -->
-            <button id="cart-details-button" class="hidden"> Kundvagnsinformation </button>
-
             <!-- Menu list -->
             <div class="menu-section">
                 <!-- Part 1: Food -->
@@ -51,9 +49,10 @@
             <div class="cart-footer">
                 <div class="total">
                     <span class="total-title"> TOTALT </span> 
-                    <span class="total-price"> 0 </span> SEK
-                    <span class="tax-info"> inkl 20% moms </span> <!-- Tax info -->
+                    <span class="total-price"> 0 </span> SEK  
+                    <span class="total-number"> </span>              
                 </div>
+                <span class="tax-info"> inkl 20% moms </span> <!-- Tax info -->
                 <button class="checkout-button"> TAKE MY MONEY! </button>
             </div>
         </div>

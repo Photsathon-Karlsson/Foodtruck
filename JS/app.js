@@ -74,12 +74,16 @@ fetchMenu();
     });
 }*/
 
-// Function showing menu & add items to shopping cart. 
+// Function to display a menu on an HTML page.
 function renderMenu(menuData) {
     const foodMenu = document.getElementById('food-menu');
     const sauceMenu = document.getElementById('sauce-menu');
     const drinkMenu = document.getElementById('drink-menu');
     const cart = []; // Array for keeping items added in shopping cart. 
+
+    // Get elements related to shopping cart details and Page 2.
+    const cartDetailsButton = document.getElementById('cart-details-button'); // Shopping Cart details button.
+    const page2 = document.querySelector('.page2-shoppingCart'); // Page 2 section.
 
     // Reset (old) HTML.
     foodMenu.innerHTML = '';
@@ -93,7 +97,7 @@ function renderMenu(menuData) {
         menuItem.classList.add('menu-item');
         let descriptionHTML = '';
 
-        // Add discriptions (not for drinks). 
+        // Add descriptions (not for drinks). 
         if (item.type !== 'drink') {
             descriptionHTML = `<p class="item-description">${item.description || 'Ingen beskrivning'}</p>`;
         }
@@ -102,7 +106,7 @@ function renderMenu(menuData) {
         menuItem.innerHTML = `
             <div class="item-header">
                 <span class="item-name">${item.name}</span>
-                <span class="item-price">${item.price || 'N/A'} SEK</span> 
+                <span class="item-price"> ${item.price || 'N/A'} SEK</span> 
             </div>
             ${descriptionHTML}
         `;
@@ -127,27 +131,100 @@ function renderMenu(menuData) {
             drinkMenu.appendChild(menuItem);
         }
     });
+
+    // Event listener to show Page 2 when clicking Shopping Cart details button.
+    cartDetailsButton.addEventListener('click', () => {
+        page2.classList.remove('hidden'); // Show Page 2.
+        renderCartItems(cart); // Render the shopping cart details on Page 2.
+    });
 }
 
-// Function for update shopping cart. 
+// Page 2 : Shopping Cart 
+// Update the display of the shopping cart.
 function updateCartDisplay(cart) {
-    // Get the element showing number of items in shopping cart & update.
     const cartItemCount = document.getElementById('cart-item-count');
-    cartItemCount.textContent = `: ${cart.length} artiklar`;
     
-    // Check if cart-count element is in DOM.
-    const cartCount = document.getElementById('cart-count');
-    if (cartCount) {
-        // Change background color of cart-count.
-        cartCount.style.backgroundColor = 'white';
-        console.log("Found element cart-count & changed BG color");
+    // Show the total number of items in the cart.
+    const totalItems = cart.reduce((total, item) => total + (item.quantity || 1), 0);
+    cartItemCount.textContent = `: ${totalItems} artiklar`;
+
+    const cartDetailsButton = document.getElementById('cart-details-button');
+
+    // Show/Hide the cart details button.
+    if (cart.length > 0) {
+        cartDetailsButton.classList.remove('hidden');
     } else {
-        // If not found cart-count.
-        console.log("Not found cart-count");
+        cartDetailsButton.classList.add('hidden');
     }
 }
 
-// Page : 2 Shopping Cart
+// Show the items in the shopping cart on page 2.
+function renderCartItems(cart) {
+    const cartItemsList = document.querySelector('.cart-items');
+    const totalPriceElem = document.querySelector('.total-price');
 
+    // Remove (old) items.
+    cartItemsList.innerHTML = '';
 
+    // Create (new) items.
+    cart.forEach(item => {
+        const cartItem = document.createElement('li');
+        cartItem.classList.add('cart-item');
 
+        cartItem.innerHTML = `
+            <span class="item-name">${item.name}</span>
+            <span class="item-price">${item.price} SEK</span>
+            <div class="item-controls">
+                <button class="control-button" data-action="increase" data-item="${item.name}"> + </button>
+                <span class="item-quantity">${item.quantity || 1}</span> stycken
+                <button class="control-button" data-action="decrease" data-item="${item.name}"> - </button>
+            </div>
+        `;
+        cartItemsList.appendChild(cartItem);
+    });
+
+    // Add Event Listener for (+ -) items. 
+    const controlButtons = cartItemsList.querySelectorAll('.control-button');
+    controlButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            const action = e.target.getAttribute('data-action');
+            const itemName = e.target.getAttribute('data-item');
+
+            // Check if the press +increases or -decreases the quantity of items.
+            if (action === 'increase') {
+                changeItemQuantity(cart, itemName, 1);
+            } else if (action === 'decrease') {
+                changeItemQuantity(cart, itemName, -1);
+            }
+        });
+    });
+
+    // Calculate the total price.
+    const totalPrice = cart.reduce((total, item) => total + (item.price * (item.quantity || 1)), 0);
+    totalPriceElem.textContent = totalPrice.toFixed(2); // Show the total price of the product with 2 decimal places (00.00 SEK).
+}
+
+// Change the quantity of items in the cart.
+function changeItemQuantity(cart, itemName, quantityChange) {
+    // Find items in shopping cart.
+    const cartItem = cart.find(item => item.name === itemName);
+    if (!cartItem) return; // If the product is not found, stop working.
+
+    // Update the current quantity of items (if none, start at 1).
+    let itemQuantity = cartItem.quantity || 1;
+    itemQuantity += quantityChange;
+
+    // Check if the quantity of the item is 0/less (then remove it from the cart).
+    if (itemQuantity <= 0) {
+        const index = cart.indexOf(cartItem);
+        if (index !== -1) {
+            cart.splice(index, 1); // Remove items from cart.
+        }
+    } else {
+        cartItem.quantity = itemQuantity; // Update new product quantity.
+    }
+
+    // Refresh the display screen.
+    renderCartItems(cart); // Show new products.
+    updateCartDisplay(cart); // Update new info.
+}
