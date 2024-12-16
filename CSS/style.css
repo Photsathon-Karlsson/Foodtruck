@@ -26,13 +26,6 @@ body {
     color: white;
     text-align: center;
 }
-.header-background h1 {
-    font-size: 3rem;
-    margin: 0;
-    background-color: #33333388;
-    padding: 20px;
-    border-radius: 20px;
-}
 
 /* ********** Page 1 : Menu ********** */
 .page1-menu {
@@ -50,23 +43,11 @@ body {
     margin: 20px;
     list-style-type: none;
 }
-.menu-title {
-    font-size: 22px;
-    font-weight: bold;
-    text-align: center;
-    padding: 10px;
-    margin-bottom: 20px;
-    background-color: #333;
-    color: white;
-    border-radius: 6px 6px 0 0;
+#menu-container h2 {
+    margin: 10px;
 }
-.menu-section {
-    margin-bottom: 20px;
-}
-.menu-list {
+.menu-section ul {
     list-style: none;
-    padding: 0;
-    margin: 0;
 }
 .menu-item {
     background-color: #444;
@@ -79,38 +60,29 @@ body {
     justify-content: space-between;
     align-items: center;
 }
-.item-name {
-    font-weight: bold;
-    font-size: 16px;
-}
-.item-price {
-    font-size: 14px;
-}
 .item-description {
     font-size: 12px;
     margin-top: 5px;
 }
-.section-title {
-    font-size: x-large;
-    margin: 10px;
+#food-menu li {
+    margin: 0; 
+    padding: 10px; 
+    border-radius: 0%;
 }
-/* Button groups */
-.button-group {
+#cart-count img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+#cart-count {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-.menu-button {
-    background-color: #444;
-    color: white;
-    border: none;
-    padding: 8px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-}
-.menu-button:hover {
-    background-color: #555;
+    justify-content: flex-end;
+    align-items: center;
+    color: black;
+    padding: 10px;
+    border-radius: 5px;
+
+    width: auto;
 }
 
 /* ********** Page 2 : Shopping Cart ********** */
@@ -140,8 +112,7 @@ body {
     list-style: none;
     padding: 0;
     margin: 0;
-}
-.cart-item {
+
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -169,6 +140,10 @@ body {
 .total {
     background-color: lightgray;
     padding: 10px;
+}
+/* Hide unwanted elements */
+.hidden {
+    display: none;
 }
 
 /* ********** Page 3 : Order ********** */

@@ -15,64 +15,43 @@
     <!-- Page 1 : Menu -->
     <section class="page1-menu">
         <div id="menu-container">
-            <h1 class="menu-title"> MENY </h1>
+            <!-- Shopping cart Section -->
+            <div id="cart-count">
+                <img src="IMG/shoppingCart.png" alt="shoppingCart"> 
+                <span id="cart-item-count"> 0 artiklar </span> <!-- Number of chosen items -->
+            </div> 
+            
+            <!-- Shopping Cart details button (Hide button) -->
+            <button id="cart-details-button" class="hidden"> Kundvagnsinformation </button>
+
+            <!-- Menu list -->
             <div class="menu-section">
-
-                <!-- <div class="menu-list"> <ul id=""> </ul> </div> -->
-
-                <!-- Part 1 : Foods -->
-                <ul class="menu-list">
-                    <li class="menu-item">
-                        <div class="item-header">
-                            <span class="item-name" > (Test) food menu <!-- List of food menu --> </span>
-                            <span class="item-price"> 9 SEK <!-- Price --> </span>
-                        </div>
-                        <p class="item-description"> (Test) kantarell, schalottenlök, morot, bladpersilja <!-- Food descriptions --> </p>
-                    </li>
-                </ul>
-                <!-- Part 2 : Sauces -->
-                <div class="section-title">
-                    <span class="sauces"> DIPSÅS </span>
-                    <span class="sauces-price"> 19 SEK </span>
-                </div>
-                <div class="button-group">
-                    <button class="menu-button"> (Test) sweet chili <!-- Sauce menu --> </button>
-                </div>
-                <!-- Part 3 : Drinks -->
-                <div class="menu-section">
-                    <div class="section-title">
-                        <span class="drinks"> DRICKA </span>
-                        <span class="drinks-price"> 19 SEK </span>
-                    </div>
-                    <div class="button-group">
-                        <button class="menu-button"> (Test) Fanta Orange <!-- Drinks menu --> </button>   
-                    </div>
-                </div>
-            </div>     
+                <!-- Part 1: Food -->
+                <h2 class="foods-title"> MENY </h2>
+                <ul id="food-menu"></ul>
+                <!-- Part 2: Sauces -->
+                <h2 class="sauces-title"> DIPSÅS </h2>
+                <ul id="sauce-menu"></ul>
+                <!-- Part 3: Drinks -->
+                <h2 class="drinks-title"> DRICKA </h2>
+                <ul id="drink-menu"></ul>
+            </div>
         </div>
     </section>
-
+    
     <!-- Page 2 : Shopping Cart -->
-    <section class="page2-shoppingCart">
+    <section class="page2-shoppingCart hidden">
         <div class="cart-container">
             <div class="cart-header">
                 <span class="shoppingCart-icon"><img src="IMG/shoppingCart.png" alt="shoppingCart"></span>
             </div>
             <ul class="cart-items">
-                <li class="cart-item">
-                    <span class="item-name"> <!-- Name of item --> </span> 
-                    <span class="item-price"> <!-- Price of item --> </span> SEK
-                    <div class="item-controls">
-                        <button class="control-button"> + </button> <!-- Add item button -->
-                        <span class="item-quantity"> <!-- Number of item --> </span> stycken
-                        <button class="control-button"> - </button>  <!-- Remove item button -->
-                    </div>
-                </li>
+                <!-- Items in the cart will be added with JavaScript -->
             </ul>
             <div class="cart-footer">
                 <div class="total">
                     <span class="total-title"> TOTALT </span> 
-                    <span class="total-price"> <!-- Total price --> </span> SEK
+                    <span class="total-price"> 0 </span> SEK
                     <span class="tax-info"> inkl 20% moms </span> <!-- Tax info -->
                 </div>
                 <button class="checkout-button"> TAKE MY MONEY! </button>

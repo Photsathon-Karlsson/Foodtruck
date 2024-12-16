@@ -3,7 +3,7 @@ const apiUrl = "https://fdnzawlcf6.execute-api.eu-north-1.amazonaws.com/";
 const apiKey = "yum-vKkkQHqQboi7c6J";
 const tenantId = "1bn0";
 
-// Option for request.
+// Option for request (key).
 const options = {
     method: 'POST',
     headers: {
@@ -42,10 +42,12 @@ async function fetchMenu() {
     }   
 }
 fetchMenu();
-registerTenant();
+
+// Disabled since tenant is already registered.
+//registerTenant();
 
 // Function to display a menu on an HTML page.
-function renderMenu(menuData) { // Create "renderMenu" that uses menuData to show a menu on the screen.
+/*function renderMenu(menuData) { // Create "renderMenu" that uses menuData to show a menu on the screen.
     const menuContainer = document.getElementById('menu-container'); 
 
     // Remove old info & reset the internal HTML of the new menuContainer (adding an <h1> heading for the menu name & an empty <div>).
@@ -70,22 +72,82 @@ function renderMenu(menuData) { // Create "renderMenu" that uses menuData to sho
         `;
         menuSection.appendChild(menuItem);
     });
+}*/
+
+// Function showing menu & add items to shopping cart. 
+function renderMenu(menuData) {
+    const foodMenu = document.getElementById('food-menu');
+    const sauceMenu = document.getElementById('sauce-menu');
+    const drinkMenu = document.getElementById('drink-menu');
+    const cart = []; // Array for keeping items added in shopping cart. 
+
+    // Reset (old) HTML.
+    foodMenu.innerHTML = '';
+    sauceMenu.innerHTML = '';
+    drinkMenu.innerHTML = '';
+
+    // Remove (old) info and create the new menu. 
+    menuData.forEach(item => {
+        // Create <li> for all menus.
+        const menuItem = document.createElement('li');
+        menuItem.classList.add('menu-item');
+        let descriptionHTML = '';
+
+        // Add discriptions (not for drinks). 
+        if (item.type !== 'drink') {
+            descriptionHTML = `<p class="item-description">${item.description || 'Ingen beskrivning'}</p>`;
+        }
+
+        // Create HTML lists of menu. 
+        menuItem.innerHTML = `
+            <div class="item-header">
+                <span class="item-name">${item.name}</span>
+                <span class="item-price">${item.price || 'N/A'} SEK</span> 
+            </div>
+            ${descriptionHTML}
+        `;
+
+        // Add event listener for items.
+        const itemName = menuItem.querySelector('.item-name');
+        itemName.addEventListener('click', () => {
+            // Add items in shopping cart. 
+            cart.push(item);
+            alert(`${item.name} har lagts till i din varukorg.`);
+
+            // Update items in shopping cart.
+            updateCartDisplay(cart);
+        });
+
+        // Fix 3 menu groups.
+        if (item.type === 'wonton') {
+            foodMenu.appendChild(menuItem);
+        } else if (item.type === 'dip') {
+            sauceMenu.appendChild(menuItem);
+        } else if (item.type === 'drink') {
+            drinkMenu.appendChild(menuItem);
+        }
+    });
 }
 
+// Function for update shopping cart. 
+function updateCartDisplay(cart) {
+    // Get the element showing number of items in shopping cart & update.
+    const cartItemCount = document.getElementById('cart-item-count');
+    cartItemCount.textContent = `: ${cart.length} artiklar`;
+    
+    // Check if cart-count element is in DOM.
+    const cartCount = document.getElementById('cart-count');
+    if (cartCount) {
+        // Change background color of cart-count.
+        cartCount.style.backgroundColor = 'white';
+        console.log("Found element cart-count & changed BG color");
+    } else {
+        // If not found cart-count.
+        console.log("Not found cart-count");
+    }
+}
+
+// Page : 2 Shopping Cart
 
 
-// Function to create a new Tenant.
-/*buttonTenant.addEventListener('click', async  () => {
-	const options = {
-		method: 'POST',
-		body: JSON.stringify({ name: 'Photsathon' }),
-		headers: {
-			"Content-Type": 'application/json',
-			"x-zocom": apiKey
-		}
-	}
-	const response = await fetch(apiUrl + '/tenants', options)
-	const data = await response.json()
-	console.log('Tenant: ', data)
-})*/
 
