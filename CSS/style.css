@@ -92,6 +92,7 @@ body {
 }
 #cart-details-button:hover, .menu-section ul:hover {
     cursor: pointer;
+    background-color: lightgrey;
 }
 
 /* ********** Page 2 : Shopping Cart ********** */
@@ -103,9 +104,9 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f7f7f7;
 }
-.page2-shoppingCart.hidden {
-    display: none; /* Hides the cart when not active */
-}
+/*.page2-shoppingCart.hidden {
+    display: none; /* Hides the cart when not active 
+}*/
 .cart-container {
     width: 300px;
     max-width: 100%; 
@@ -169,14 +170,16 @@ body {
     align-items: center;
     font-weight: bold;
     font-size: 16px;
-}
-.total-title {
-    color: #333;
+    background-color: darkgray;
+    padding: 10px;
+    margin-bottom: 0;
+    border-radius: 5px;
 }
 .total-info {
     display: flex;
     flex-direction: column;
     align-items: flex-end; /* Aligns text to the right */
+    margin-top: 0;
 }
 .total-price {
     font-size: 16px;
@@ -186,7 +189,6 @@ body {
     color: #777;
     margin-top: 5px;
 }
-
 /* Checkout button */
 .checkout-button {
     background-color: #333;
@@ -202,7 +204,6 @@ body {
     margin-top: 10px;
     transition: background-color 0.3s ease;
 }
-
 .checkout-button:hover {
     background-color: #555;
 }

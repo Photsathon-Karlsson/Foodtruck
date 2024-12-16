@@ -228,3 +228,6 @@ function changeItemQuantity(cart, itemName, quantityChange) {
     renderCartItems(cart); // Show new products.
     updateCartDisplay(cart); // Update new info.
 }
+
+
+
