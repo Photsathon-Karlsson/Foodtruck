@@ -154,7 +154,7 @@ function updateCartDisplay(cart) {
     
     // Show the total number of items in the cart.
     const totalItems = cart.reduce((total, item) => total + (item.quantity || 1), 0);
-    cartItemCount.textContent = `: ${totalItems} artiklar`;
+    cartItemCount.textContent = `${totalItems}`;
 
     const cartDetailsButton = document.getElementById('cart-details-button');
 
