@@ -95,20 +95,28 @@ function renderMenu(menuData) {
     // Create <li> for all menus.
     const menuItem = document.createElement('li');
     menuItem.classList.add('menu-item');
-    let descriptionHTML = '';
+    let ingredientsHTML = '';
+    let priceHTML = '';
 
-    // Remove descriptions & price (dip & drinks). 
-    if (item.type !== 'drink' && item.type !== 'dip') {
-        descriptionHTML = `<p class="item-description">${item.description || 'Ingen beskrivning'}</p>`;
+   // Show price & ingredients only for wontons.
+   if (item.type === 'wonton') {
+    priceHTML = `<span class="item-price"> ${item.price || 'N/A'} SEK</span>`;
+    } else if (item.type !== 'drink' && item.type !== 'dip') {
+        priceHTML = `<span class="item-price"> ${item.price || 'N/A'} SEK</span>`;
     }
 
-        // Create HTML lists of menu. 
+    // Remove ingredients & price for dips & drinks.
+    if (item.type !== 'drink' && item.type !== 'dip') {
+        ingredientsHTML = `<p class="item-ingredients">${item.ingredients || 'Ingen beskrivning'}</p>`;
+    }
+
+        // Create HTML lists for menu. 
         menuItem.innerHTML = `
             <div class="item-header">
                 <span class="item-name">${item.name}</span>
-                <span class="item-price"> ${item.price || 'N/A'} SEK</span> 
+                ${priceHTML} 
             </div>
-            ${descriptionHTML}
+            ${ingredientsHTML}
         `;
 
         // Add event listener for items.
