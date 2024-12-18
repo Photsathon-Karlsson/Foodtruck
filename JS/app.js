@@ -92,15 +92,15 @@ function renderMenu(menuData) {
 
     // Remove (old) info and create the new menu. 
     menuData.forEach(item => {
-        // Create <li> for all menus.
-        const menuItem = document.createElement('li');
-        menuItem.classList.add('menu-item');
-        let descriptionHTML = '';
+    // Create <li> for all menus.
+    const menuItem = document.createElement('li');
+    menuItem.classList.add('menu-item');
+    let descriptionHTML = '';
 
-        // Add descriptions (not for drinks). 
-        if (item.type !== 'drink') {
-            descriptionHTML = `<p class="item-description">${item.description || 'Ingen beskrivning'}</p>`;
-        }
+    // Remove descriptions & price (dip & drinks). 
+    if (item.type !== 'drink' && item.type !== 'dip') {
+        descriptionHTML = `<p class="item-description">${item.description || 'Ingen beskrivning'}</p>`;
+    }
 
         // Create HTML lists of menu. 
         menuItem.innerHTML = `
