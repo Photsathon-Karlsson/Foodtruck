@@ -124,7 +124,6 @@ function renderMenu(menuData) {
         itemName.addEventListener('click', () => {
             // Add items in shopping cart. 
             cart.push(item);
-            alert(`${item.name} har lagts till i din varukorg.`);
 
             // Update items in shopping cart.
             updateCartDisplay(cart);
