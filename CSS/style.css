@@ -181,6 +181,7 @@ body {
     flex-wrap: wrap;
     gap: 20px;
 }
+/* shopping cart */
 #cart-count img {
     width: 50px;
     height: 50px;
@@ -197,7 +198,6 @@ body {
     width: auto;
     color: black;
 }
-
 #cart-item-count {
     background-color: red;
     color: white;
@@ -209,7 +209,6 @@ body {
     position: absolute;
     top: 29%;
 }
-
 #cart-count img:active {
     animation: bounce 0.3s ease;
 }

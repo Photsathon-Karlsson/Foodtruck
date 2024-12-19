@@ -166,9 +166,6 @@ function updateCartDisplay(cart) {
     }
 }
 
-
-
-
 // Show the items in the shopping cart on page 2.
 function renderCartItems(cart) {
     const cartItemsList = document.querySelector('.cart-items');
