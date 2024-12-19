@@ -3,7 +3,7 @@ const apiUrl = "https://fdnzawlcf6.execute-api.eu-north-1.amazonaws.com/";
 const apiKey = "yum-vKkkQHqQboi7c6J";
 const tenantId = "1bn0";
 
-// Option for request (key).
+// Option for request.
 const options = {
     method: 'POST',
     headers: {
@@ -20,7 +20,7 @@ async function registerTenant(){
         const response = await fetch(apiUrl + "/tenants", options); // Call API.
         const data = await response.json(); // Convert to JSON.
         console.log("Tenant registered successfully: ", data);
-    } catch(error){
+    } catch(error) {
             console.error("Error registering tenant: ", error); 
         }
     }
@@ -147,7 +147,8 @@ function renderMenu(menuData) {
     });
 }
 
-// Page 2 : Shopping Cart 
+// -------------------- Page 2 : Shopping Cart -------------------- */ 
+
 // Update the display of the shopping cart.
 function updateCartDisplay(cart) {
     const cartItemCount = document.getElementById('cart-item-count');
@@ -165,6 +166,9 @@ function updateCartDisplay(cart) {
         cartDetailsButton.classList.add('hidden');
     }
 }
+
+
+
 
 // Show the items in the shopping cart on page 2.
 function renderCartItems(cart) {
@@ -236,6 +240,91 @@ function changeItemQuantity(cart, itemName, quantityChange) {
     renderCartItems(cart); // Show new products.
     updateCartDisplay(cart); // Update new info.
 }
+
+
+
+// Function to fetch order data by order ID.
+/*function getOrderData(ordersId) {
+    const optionsOrders = {
+        // Get data.
+        method: 'GET', 
+        headers: {
+            "Content-Type": 'application/json',  // Send data in JSON format.
+            "x-zocom": apiKey  // API Key.
+        },
+    };
+
+    // Request data
+    fetch(`${apiUrl}orders/${ordersId}`, optionsOrders)  
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error! Status: ${response.status}`);  // Checking error.
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Beställningsinformation:', data);  // Process orders data.
+        })
+        .catch(error => {
+            console.error('Error:', error.message);  // Show description "error".
+        });
+}
+
+// Usage
+const ordersId = "3023b0f5"; // ex.
+
+getOrderData(ordersId);*/
+
+
+/*const ordersId = "3023b0f5";
+
+const optionsOrders = {
+    // Get data.
+    method: 'GET', 
+    headers: {
+        "Content-Type": 'application/json',  // Send data in JSON format.
+        "x-zocom": apiKey  // my API Key.
+    },
+};
+
+// Request data.
+fetch(`${apiUrl}orders/${ordersId}`, optionsOrders)  
+    .then(response => response.json())
+    .then(data => {
+        console.log('Beställningsinformation:', data);  // Process orders data (Orders information).
+    })
+    .catch(error => {
+        console.error('Fel:', error);  // Catch error.
+    });
+
+
+
+
+
+
+// Request for Receipt ID.
+/*const receiptId = "12345";  // Replace with the real receipt ID.
+
+// Request settings. 
+const optionsReceipt = {
+    method: 'GET',  // Use method "GET" to get data.
+    headers: {
+        "Content-Type": 'application/json',  // Send data in JSON format.
+        "x-zocom": apiKey  // my API Key.
+    },
+};
+
+// Request data. XXXX Function!!!
+fetch(`${apiUrl}receipts/${receiptId}`, optionsReceipt)  // Use the correct optionsReceipt
+    .then(response => response.json())
+    .then(data => {
+        console.log('Kvittoinformation:', data);  // Process received receipt data.
+    })
+    .catch(error => {
+        console.error('Fel:', error);  // Catch error.
+    });
+*/
+
 
 
 
