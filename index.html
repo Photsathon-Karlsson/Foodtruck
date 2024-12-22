@@ -21,7 +21,7 @@
                 <button id="cart-details-button" class="hidden"> 
                 <img src="IMG/cart btn.svg" alt="shoppingCart">
                 </button>
-                <span id="cart-item-count"> 0 </span> <!-- Number of chosen items -->
+                <span id="cart-item-count"></span> <!-- Number of chosen items -->
             </div> 
             
             <button id="submitOrderButton">Submit Order</button>
@@ -44,7 +44,8 @@
     <!-- Page 2 : Shopping Cart -->
     <section class="page2-shoppingCart hidden">
         <div class="cart-container">
-            <div class="cart-header">
+          <div class="cart-header">
+              <button class="closeCart"> X </button>
                 <span class="shoppingCart-icon"><img src="IMG/cart btn.svg" alt="shoppingCart"></span>
             </div>
             <ul class="cart-items">
@@ -63,7 +64,7 @@
     </section>
 
     <!-- Page 3 : Order -->
-    <section class="page3-order">
+    <section class="page3-order hidden">
         <div class="container">
             <div class="box">
                 <div class="image">
@@ -79,7 +80,7 @@
     </section>
 
     <!-- Page 4 : Receipt -->
-    <section class="page4-receipt">
+    <section class="page4-receipt hidden">
         <div class="receipt">
             <div class="header">
                 <div class="logo"><img src="IMG/logo.jpg" alt="logo"></div>

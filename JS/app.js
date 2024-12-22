@@ -1,8 +1,7 @@
 // Set API URL and key.
 const apiUrl = "https://fdnzawlcf6.execute-api.eu-north-1.amazonaws.com/";
 const apiKey = "yum-vKkkQHqQboi7c6J";
-const tenantId = "1bn0";
-const cart = [];
+let tenantId;
 
 // Option for request.
 const options = {
@@ -18,9 +17,14 @@ const options = {
 //Function to register Tenant
 async function registerTenant(){ 
     try{
-        const response = await fetch(apiUrl + "/tenants", options); // Call API.
+        const response = await fetch(apiUrl + "tenants", options); // Call API.
         const data = await response.json(); // Convert to JSON.
         console.log("Tenant registered successfully: ", data);
+        if (data.id !== undefined){
+            tenantId = data.id; // Save tenant ID, If new name.
+        } else {
+            tenantId = "1bn0"; // Default tenant ID. (for name 'Koi')
+        }
     } catch(error) {
             console.error("Error registering tenant: ", error); 
         }
@@ -45,7 +49,7 @@ async function fetchMenu() {
 fetchMenu();
 
 // Disabled since tenant is already registered.
-//registerTenant();
+registerTenant();
 
 // Function to display a menu on an HTML page.
 /*function renderMenu(menuData) { // Create "renderMenu" that uses menuData to show a menu on the screen.
@@ -80,17 +84,16 @@ function renderMenu(menuData) {
     const foodMenu = document.getElementById('food-menu');
     const sauceMenu = document.getElementById('sauce-menu');
     const drinkMenu = document.getElementById('drink-menu');
+
     const cart = []; // Array for keeping items added in shopping cart. 
 
     // Get elements related to shopping cart details and Page 2.
     const cartDetailsButton = document.getElementById('cart-details-button'); // Shopping Cart details button.
-    const page2 = document.querySelector('.page2-shoppingCart'); // Page 2 section.
 
     // Reset (old) HTML.
     foodMenu.innerHTML = '';
     sauceMenu.innerHTML = '';
     drinkMenu.innerHTML = '';
-
     // Remove (old) info and create the new menu. 
     menuData.forEach(item => {
     // Create <li> for all menus.
@@ -124,8 +127,12 @@ function renderMenu(menuData) {
         const itemName = menuItem.querySelector('.item-name');
         itemName.addEventListener('click', () => {
             // Add items in shopping cart. 
-            cart.push(item);
-
+              const existingItem = cart.find(i => i.id === item.id);
+              if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+              cart.push({ ...item, quantity: 1 });
+            }
             // Update items in shopping cart.
             updateCartDisplay(cart);
         });
@@ -142,27 +149,62 @@ function renderMenu(menuData) {
 
     // Event listener to show Page 2 when clicking Shopping Cart details button.
     cartDetailsButton.addEventListener('click', () => {
-        page2.classList.remove('hidden'); // Show Page 2.
+        showCart(); // Show the shopping cart.
         renderCartItems(cart); // Render the shopping cart details on Page 2.
     });
-}
+
+    // Event listener to show Page 1 when clicking the "Back" button.
+    const backButton = document.querySelector('.closeCart');
+    backButton.addEventListener('click', () => {
+      showMenu(); // Show the shopping cart.
+  });
+
+    // Event listener to show Page 3 when clicking the "Order" button.
+    const orderButton = document.querySelector('.checkout-button');
+    orderButton.addEventListener('click', () => {
+      showOrder(); // Show the order.
+      submitOrder(cart); // Submit the order.
+    });
+
+    // Event listener to show Page 4 when clicking the "Receipt" button.
+    const receiptButton = document.querySelector('.receipt-button');
+    receiptButton.addEventListener('click', () => {
+        showReceipt(); // Show the receipt.
+    });
+
+    // Event listener to show Page 1 when clicking the "new order button" button.
+    const newOrderButton = document.querySelectorAll('.new-order-button');
+    newOrderButton.forEach(e => e.addEventListener('click', () => {
+        backToMenu(); // Show the menu.
+
+        cart.length = 0; // Clear the shopping cart.
+        updateCartDisplay(cart); // Update the shopping cart.
+    }));
+  }
 
 // -------------------- Page 2 : Shopping Cart -------------------- */ 
 
 // Update the display of the shopping cart.
 function updateCartDisplay(cart) {
     const cartItemCount = document.getElementById('cart-item-count');
+    const cartDetailsButton = document.getElementById('cart-details-button');
     
     // Show the total number of items in the cart.
     const totalItems = cart.reduce((total, item) => total + (item.quantity || 1), 0);
-    cartItemCount.textContent = `${totalItems}`;
 
-    const cartDetailsButton = document.getElementById('cart-details-button');
+
+    // #cart-item-count .items {
+    //   background-color: red;
+    // }
 
     // Show/Hide the cart details button.
     if (cart.length > 0) {
+        cartItemCount.textContent = `${totalItems}`;
+        cartItemCount.classList.add('have-items');
         cartDetailsButton.classList.remove('hidden');
     } else {
+        cartItemCount.textContent = '';
+        cartItemCount.classList.remove('have-items');
         cartDetailsButton.classList.add('hidden');
     }
 }
@@ -170,22 +212,36 @@ function updateCartDisplay(cart) {
 // Show the items in the shopping cart on page 2.
 function renderCartItems(cart) {
     const cartItemsList = document.querySelector('.cart-items');
-    const totalPriceElem = document.querySelector('.total-price');
+    const totalPriceElem = document.querySelector('.total-price');    
+
+    // Combine the same items in the cart.
+    const uniqueCart = cart.reduce((acc, item) => {
+      const existingItem = acc.find(i => i.id === item.id);
+      if (existingItem) {
+          existingItem.quantity += 1;
+      } else {
+          acc.push({ ...item, quantity: item.quantity || 1 });
+      }
+      return acc;
+  }, []);
+
 
     // Remove (old) items.
     cartItemsList.innerHTML = '';
-
     // Create (new) items.
-    cart.forEach(item => {
+    uniqueCart.forEach(item => {
         const cartItem = document.createElement('li');
         cartItem.classList.add('cart-item');
 
         cartItem.innerHTML = `
-            <span class="item-name">${item.name}</span>
+            <div>
+                <span class="item-name">${item.name}</span>
+                <br>stycken
+            </div>
             <span class="item-price">${item.price} SEK</span>
             <div class="item-controls">
                 <button class="control-button" data-action="increase" data-item="${item.name}"> + </button>
-                <span class="item-quantity">${item.quantity || 1}</span> stycken
+                <span class="item-quantity">${item.quantity}</span>
                 <button class="control-button" data-action="decrease" data-item="${item.name}"> - </button>
             </div>
         `;
@@ -238,76 +294,119 @@ function changeItemQuantity(cart, itemName, quantityChange) {
     updateCartDisplay(cart); // Update new info.
 }
 
+function submitOrder(cart) {
+  const orderData = {
+    items: cart.map((item) => item.id),
+  };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-// Function sending order to API.
-
-// Function sending order to API.
-function submitOrder() {
-    // Check if has cart & apiKey or not.
-    if (!cart || cart.length === 0) {
-        console.error("Cart is empty.");
-        return;
-    }
-    if (!apiKey) {
-        console.error("API key is missing.");
-        return;
-    }
-
-    // Prepare orderData.
-    const orderData = {
-        items: cart.map(item => ({
-            id: item.id,
-            quantity: item.quantity
-        }))
-    };
-
-    // Call API.
-    fetch("https://fdnzawlcf6.execute-api.eu-north-1.amazonaws.com/orders", {
-        method: 'POST',
-        headers: {
-            "Content-Type": "application/json",
-            "x-zocom": apiKey
-        },
-        body: JSON.stringify(orderData)
+  fetch(`${apiUrl}${tenantId}/orders`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-zocom": apiKey,
+    },
+    body: JSON.stringify(orderData),
+  })
+    .then((response) => response.json())
+    .then((receipt) => {
+      displayReceipt(receipt);
     })
-    .then(response => {
-        // Check if it response.
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(order => {
-        // Show the receipt.
-        displayReceipt(order);
-    })
-    .catch(error => {
-        // Fixing error.
-        console.error("Error submitting order:", error.message);
-    });
+    .catch((error) => console.error("เกิดข้อผิดพลาดในการส่งคำสั่งซื้อ", error));
 }
 
-// Add event listener to the button
-const submitOrderButton = document.getElementById('submitOrderButton');
-submitOrderButton.addEventListener('click', function() {
-    // Call submitOrder function when the button is clicked
-    submitOrder();
-});
+function displayReceipt(receipt) {
+  console.log(receipt)
+  const eta = document.querySelector('.eta');
+  
+  // Convert eta and timestamp to Date objects
+  const etaTime = new Date(receipt.order.eta);
+  const timestampTime = new Date(receipt.order.timestamp);
+  
+  // Calculate the difference in milliseconds
+  const timeDifference = etaTime - timestampTime;
 
-*/
+  if (timeDifference > 0) {
+    // Convert milliseconds to minutes and seconds
+    const minutes = Math.floor(timeDifference / 60000); // 1 minute = 60000 ms
+    const seconds = Math.floor((timeDifference % 60000) / 1000); // Remaining seconds
+
+    // Display the result in "minutes.seconds" format
+    eta.textContent = `ETA ${minutes} MINS ${seconds} SECONDS`;
+  } else {
+    // If the time difference is negative
+    eta.textContent = "ETA 5 MINS";
+  }
+
+  const receiptContainer = document.querySelector(".receipt");
+  const receiptId = receiptContainer.querySelector(".receipt-code");
+  const itemsContainer = receiptContainer.querySelector(".items");
+
+  receiptId.textContent = receipt.order.id;
+
+  // Reset old items in receipt.
+  itemsContainer.innerHTML = "";
+
+  // Combine the same items in the cart.
+  const uniqueItems = receipt.order.items.reduce((acc, item) => {
+    const existingItem = acc.find((i) => i.id === item.id);
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      acc.push({ ...item, quantity: 1 });
+    }
+    return acc;
+  }, []);
+
+  // Add new items to receipt.
+  uniqueItems.forEach((item) => {
+    const itemElement = document.createElement("div");
+    itemElement.classList.add("item");
+    itemElement.innerHTML = `
+      <div class="item-details">
+        <span class="item-name">${item.name}</span> stycken
+      </div>
+      <div class="item-quantity-container">
+        <span class="item-quantity">${item.quantity}</span> SEK
+      </div>
+    `;
+
+    itemsContainer.appendChild(itemElement);
+  });
+  // Add total price to receipt.
+  const totalElement = document.createElement("div");
+  totalElement.classList.add("total");
+  totalElement.innerHTML = `
+    <div class="total-labels">
+      <span> TOTALT </span>
+      <span class="tax"> inkl 20% moms </span>
+    </div>
+    <span class="total-price"> ${receipt.order.orderValue} </span> SEK
+  `;
+  itemsContainer.appendChild(totalElement);
+}
+
+function showCart() {
+  document.querySelector(".page1-menu").style.display = "none";
+  document.querySelector(".page2-shoppingCart").style.display = "block";
+}
+
+function showMenu() {
+  document.querySelector(".page1-menu").style.display = "block";
+  document.querySelector(".page2-shoppingCart").style.display = "none";
+}
+
+function showOrder() {
+  document.querySelector(".page2-shoppingCart").style.display = "none";
+  document.querySelector(".page3-order").style.display = "block";
+}
+
+function showReceipt() {
+  document.querySelector(".page3-order").style.display = "none";
+  document.querySelector(".page4-receipt").style.display = "block";
+}
+
+function backToMenu() {
+  document.querySelector(".page3-order").style.display = "none";
+  document.querySelector(".page4-receipt").style.display = "none";
+  document.querySelector(".page1-menu").style.display = "block";
+} 
