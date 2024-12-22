@@ -3,12 +3,15 @@ const apiUrl = "https://fdnzawlcf6.execute-api.eu-north-1.amazonaws.com/";
 const apiKey = "yum-vKkkQHqQboi7c6J";
 let tenantId;
 
+// ( Page 1 : menu ) : The user can click & choose items to shopping cart.
+    // - Show list of menu & button for adding item to shopping cart.
+
 // Option for request.
 const options = {
     method: 'POST',
     headers: {
-        "Content-Type": 'application/json',  // Send JSON in body
-        "x-zocom": apiKey  // My API-nyckel
+        "Content-Type": 'application/json',  // Send JSON in body.
+        "x-zocom": apiKey  // API key.
     },
 
     body: JSON.stringify({ name: 'Koi' }), // Covert to JSON string.
@@ -49,7 +52,7 @@ async function fetchMenu() {
 fetchMenu();
 
 // Disabled since tenant is already registered.
-registerTenant();
+// registerTenant();
 
 // Function to display a menu on an HTML page.
 /*function renderMenu(menuData) { // Create "renderMenu" that uses menuData to show a menu on the screen.
@@ -182,7 +185,9 @@ function renderMenu(menuData) {
     }));
   }
 
-// -------------------- Page 2 : Shopping Cart -------------------- */ 
+// ( Page 2 : Shopping Cart ) : the user can see all chosen item / can change quantity of item.
+  // - Show chosen item.
+  // - The user can change quantity of item. 
 
 // Update the display of the shopping cart.
 function updateCartDisplay(cart) {
@@ -191,11 +196,6 @@ function updateCartDisplay(cart) {
     
     // Show the total number of items in the cart.
     const totalItems = cart.reduce((total, item) => total + (item.quantity || 1), 0);
-
-
-    // #cart-item-count .items {
-    //   background-color: red;
-    // }
 
     // Show/Hide the cart details button.
     if (cart.length > 0) {
@@ -215,35 +215,33 @@ function renderCartItems(cart) {
     const totalPriceElem = document.querySelector('.total-price');    
 
     // Combine the same items in the cart.
-    const uniqueCart = cart.reduce((acc, item) => {
-      const existingItem = acc.find(i => i.id === item.id);
+    const uniqueCart = cart.reduce((acc, item) => { // Use "reduce function" to process items in shopping cart & make same chosen item into 1 list.
+      const existingItem = acc.find(i => i.id === item.id); // Check current item.
       if (existingItem) {
-          existingItem.quantity += 1;
+          existingItem.quantity += 1; // Add +1 for the same chosen item.
       } else {
-          acc.push({ ...item, quantity: item.quantity || 1 });
+          acc.push({ ...item, quantity: item.quantity || 1 }); // Add new item & quantity.
       }
-      return acc;
+      return acc; // accumulator (collect)
   }, []);
-
 
     // Remove (old) items.
     cartItemsList.innerHTML = '';
     // Create (new) items.
     uniqueCart.forEach(item => {
-        const cartItem = document.createElement('li');
+        const cartItem = document.createElement('li'); // Creat new element <li> & keep it in variable "cartItem".
         cartItem.classList.add('cart-item');
 
         cartItem.innerHTML = `
             <div>
                 <span class="item-name">${item.name}</span>
-                <br>stycken
+                  <div class="item-controls">
+                    <button class="control-button" data-action="increase" data-item="${item.name}"> + </button>
+                    <span class="item-quantity">${item.quantity} stycken </span>
+                    <button class="control-button" data-action="decrease" data-item="${item.name}"> - </button>
+                  </div>
             </div>
-            <span class="item-price">${item.price} SEK</span>
-            <div class="item-controls">
-                <button class="control-button" data-action="increase" data-item="${item.name}"> + </button>
-                <span class="item-quantity">${item.quantity}</span>
-                <button class="control-button" data-action="decrease" data-item="${item.name}"> - </button>
-            </div>
+            <span class="item-price">${item.price} SEK</span> 
         `;
         cartItemsList.appendChild(cartItem);
     });
@@ -252,7 +250,7 @@ function renderCartItems(cart) {
     const controlButtons = cartItemsList.querySelectorAll('.control-button');
     controlButtons.forEach(button => {
         button.addEventListener('click', (e) => {
-            const action = e.target.getAttribute('data-action');
+            const action = e.target.getAttribute('data-action'); // Use "e.target" for get value of "data-action".
             const itemName = e.target.getAttribute('data-item');
 
             // Check if the press +increases or -decreases the quantity of items.
@@ -269,14 +267,14 @@ function renderCartItems(cart) {
     totalPriceElem.textContent = totalPrice.toFixed(2); // Show the total price of the product with 2 decimal places (00.00 SEK).
 }
 
-// Change the quantity of items in the cart.
+// Change the quantity of items in shopping cart.
 function changeItemQuantity(cart, itemName, quantityChange) {
     // Find items in shopping cart.
     const cartItem = cart.find(item => item.name === itemName);
     if (!cartItem) return; // If the product is not found, stop working.
 
     // Update the current quantity of items (if none, start at 1).
-    let itemQuantity = cartItem.quantity || 1;
+    let itemQuantity = cartItem.quantity || 1;  //should not have a field called quantity. This should be handled by checking the array and counting each instance with the same ID or Name for visualisation and each one should have it´s own element in the array to be able to order several of the same dish.
     itemQuantity += quantityChange;
 
     // Check if the quantity of the item is 0/less (then remove it from the cart).
@@ -292,50 +290,62 @@ function changeItemQuantity(cart, itemName, quantityChange) {
     // Refresh the display screen.
     renderCartItems(cart); // Show new products.
     updateCartDisplay(cart); // Update new info.
+    console.log(cart);
 }
 
-function submitOrder(cart) {
+
+async function submitOrder(cart) {
   const orderData = {
     items: cart.map((item) => item.id),
   };
 
-  fetch(`${apiUrl}${tenantId}/orders`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-zocom": apiKey,
-    },
-    body: JSON.stringify(orderData),
-  })
-    .then((response) => response.json())
-    .then((receipt) => {
-      displayReceipt(receipt);
-    })
-    .catch((error) => console.error("เกิดข้อผิดพลาดในการส่งคำสั่งซื้อ", error));
+  try {
+    const response = await fetch(`${apiUrl}${tenantId}/orders`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-zocom": apiKey,
+      },
+      body: JSON.stringify(orderData),
+    });
+
+    const receipt = await response.json();
+    displayReceipt(receipt);
+  } catch (error) {
+    console.error("Order error", error);
+  }
 }
+
+// ( Page 3 : Order ) : Send order to API / when get answer from API, show chosen item ID & have choice to start order again.
+    // - Send Post Request with order info to API.
+    // - Show order ID that return.
 
 function displayReceipt(receipt) {
   console.log(receipt)
   const eta = document.querySelector('.eta');
   
-  // Convert eta and timestamp to Date objects
+  // Convert eta & timestamp to Date objects.
   const etaTime = new Date(receipt.order.eta);
   const timestampTime = new Date(receipt.order.timestamp);
   
-  // Calculate the difference in milliseconds
+  // Calculate the difference in milliseconds.
   const timeDifference = etaTime - timestampTime;
 
   if (timeDifference > 0) {
-    // Convert milliseconds to minutes and seconds
+    // Convert milliseconds to minutes & seconds.
     const minutes = Math.floor(timeDifference / 60000); // 1 minute = 60000 ms
     const seconds = Math.floor((timeDifference % 60000) / 1000); // Remaining seconds
 
-    // Display the result in "minutes.seconds" format
+    // Display the result in "minutes.seconds" format.
     eta.textContent = `ETA ${minutes} MINS ${seconds} SECONDS`;
   } else {
-    // If the time difference is negative
+    // If the time difference is negative.
     eta.textContent = "ETA 5 MINS";
   }
+
+// ( Page 4 : Receipt ) : Show reciept from API / have button to go back to menu.
+  // - Get receipt from API.
+  // - Add function to go back to menu.
 
   const receiptContainer = document.querySelector(".receipt");
   const receiptId = receiptContainer.querySelector(".receipt-code");
@@ -363,22 +373,26 @@ function displayReceipt(receipt) {
     itemElement.classList.add("item");
     itemElement.innerHTML = `
       <div class="item-details">
-        <span class="item-name">${item.name}</span> stycken
+        <span class="item-name">${item.name}</span>
+          <div class="item-controls">
+            <span class="item-quantity">${item.quantity} stycken </span>
+          </div>
       </div>
-      <div class="item-quantity-container">
-        <span class="item-quantity">${item.quantity}</span> SEK
-      </div>
+      <span class="item-price">${item.price} SEK </span>
     `;
 
     itemsContainer.appendChild(itemElement);
   });
+  
   // Add total price to receipt.
   const totalElement = document.createElement("div");
   totalElement.classList.add("total");
   totalElement.innerHTML = `
     <div class="total-labels">
       <span> TOTALT </span>
-      <span class="tax"> inkl 20% moms </span>
+        <div class="tax">
+          <span class="tax"> inkl 20% moms </span>
+        </div>
     </div>
     <span class="total-price"> ${receipt.order.orderValue} </span> SEK
   `;
