@@ -242,10 +242,10 @@ function changeItemQuantity(cart, itemId, quantityChange) {
     if (!cartItem) return; // If the product is not found, stop working.
 
     if (quantityChange > 0) {
-        cart.push(cartItem); // ถ้าเพิ่มสินค้า (+): เพิ่มออบเจกต์ใหม่ลงใน cart    
+        cart.push(cartItem); // If add items (+) will put new object (new item) in shopping cart.    
     } else if (quantityChange < 0) {
       const cartItemRemove = cart.indexOf(cartItem);
-        cart.splice(cartItemRemove, 1); // ถ้าลดสินค้า (-): ลบออบเจกต์แรกที่ตรงกับ cartItem
+        cart.splice(cartItemRemove, 1); // If remove item (-) remove first object that it's the same as cartItem.
   }
 
     // Refresh the display screen.
@@ -254,24 +254,25 @@ function changeItemQuantity(cart, itemId, quantityChange) {
     console.log(cart);
 }
 
-
+// Function to submit order.
 async function submitOrder(cart) {
   const orderData = {
     items: cart.map((item) => item.id),
   };
 
+  // Use "try" to handle possible errors.
   try {
-    const response = await fetch(`${apiUrl}${tenantId}/orders`, {
-      method: "POST",
+    const response = await fetch(`${apiUrl}${tenantId}/orders`, { // Use "try" & ("await" to wait for a result) to send order to URL (apiUrl & tenantId). 
+      method: "POST", // Use "POST" to send data to server.
       headers: {
         "Content-Type": "application/json",
         "x-zocom": apiKey,
       },
-      body: JSON.stringify(orderData),
+      body: JSON.stringify(orderData), // Convert to JSON.
     });
 
-    const receipt = await response.json();
-    displayReceipt(receipt);
+    const receipt = await response.json(); // Wait for convert reponse from server to JASON & keep in variable "receipt".
+    displayReceipt(receipt); // Call function "displayReceipt" to display/show receipts info from server.
   } catch (error) {
     console.error("Order error", error);
   }
@@ -281,56 +282,58 @@ async function submitOrder(cart) {
     // - Send Post Request with order info to API.
     // - Show order ID that return.
 
+// Function to show/display receipt. 
 function displayReceipt(receipt) {
-  console.log(receipt)
-  const eta = document.querySelector('.eta');
+  console.log(receipt) // Show receipt info in console (for checking & make sure that got the receipt).
+  const eta = document.querySelector('.eta'); // Select the HTML element with class(eta) & prepare to insert ETA text into that element.
   
-  // Convert eta & timestamp to Date objects.
-  const etaTime = new Date(receipt.order.eta);
-  const timestampTime = new Date(receipt.order.timestamp);
+  // Convert ETA & timestamp to Date objects.
+  const etaTime = new Date(receipt.order.eta); // etaTime = ETA (Estimated Time of Arrival).
+  const timestampTime = new Date(receipt.order.timestamp); // timestampTime = time that order (timestamp).
   
   // Calculate the difference in milliseconds.
-  const timeDifference = etaTime - timestampTime;
+  const timeDifference = etaTime - timestampTime; // "timeDifference" will keep the difference.
 
-  if (timeDifference > 0) {
+  if (timeDifference > 0) { // timeDifference > 0 = ETA is not the current time yet.
     // Convert milliseconds to minutes & seconds.
-    const minutes = Math.floor(timeDifference / 60000); // 1 minute = 60000 ms
-    const seconds = Math.floor((timeDifference % 60000) / 1000); // Remaining seconds
+    const minutes = Math.floor(timeDifference / 60000); // 1 minute = 60000 ms (minutes = the number of "minutes" by dividing milliseconds by 60000 (because 1 minute = 60000 milliseconds)).
+    const seconds = Math.floor((timeDifference % 60000) / 1000); // Remaining seconds (seconds = the "seconds remaining" after dividing the integer number of minutes.).
 
     // Display the result in "minutes.seconds" format.
-    eta.textContent = `ETA ${minutes} MINS ${seconds} SECONDS`;
+    eta.textContent = `ETA ${minutes} MINS ${seconds} SECONDS`; // Ex. "ETA 3 MINS 20 SECONDS".
   } else {
-    // If the time difference is negative.
-    eta.textContent = "ETA 5 MINS";
+    // If the time difference is negative(less than or equal to 0) = the predicted time has already been set / the set time is incorrect.
+    eta.textContent = "ETA 5 MINS"; // Show a message in case of errors or incorrect data.
   }
 
 // ( Page 4 : Receipt ) : Show reciept from API / have button to go back to menu.
   // - Get receipt from API.
   // - Add function to go back to menu.
 
-  const receiptContainer = document.querySelector(".receipt");
-  const receiptId = receiptContainer.querySelector(".receipt-code");
-  const itemsContainer = receiptContainer.querySelector(".items");
+  const receiptContainer = document.querySelector(".receipt"); // Use `document.querySelector()` to find the first HTML element with the class `.receipt`. 
+  const receiptId = receiptContainer.querySelector(".receipt-code"); // Set `receiptId` to reference `.receipt-code` inside `receiptContainer`.
+  const itemsContainer = receiptContainer.querySelector(".items"); // Create `itemsContainer` to reference the `.items` element inside `receiptContainer`.
 
-  receiptId.textContent = receipt.order.id;
+  receiptId.textContent = receipt.order.id; // Set `receiptId` text to `receipt.order.id`.
 
   // Reset old items in receipt.
   itemsContainer.innerHTML = "";
 
-  // Create an array to count items by ID, using index as ID
+  // Create an array to count items by ID, using index as ID.
   const itemCounts = [];
   receipt.order.items.forEach(item => {
-      itemCounts[item.id] = (itemCounts[item.id] || 0) + 1;
+      itemCounts[item.id] = (itemCounts[item.id] || 0) + 1; // Increase the item count in `itemCounts`, starting at 0 if not already set.
   });
 
   // Add new items to receipt.
-  itemCounts.forEach((count, id) => {
+  itemCounts.forEach((count, id) => { // Use `forEach` to loop through `itemCounts`, passing the count (quantity of items) and id (item index) to the function in each round.
     if (count > 0) {
-    const item = receipt.order.items.find(item => item.id === id);
+    const item = receipt.order.items.find(item => item.id === id); // Use `find()` to search for an item with the current ID in the `items` array & store it in the `item` variable.
 
-    const itemElement = document.createElement("div");
+    const itemElement = document.createElement("div"); // Create a new `<div>` element and store it in the variable `itemElement`.
     itemElement.classList.add("item");
-    itemElement.innerHTML = `
+    // Set the HTML structure inside `itemElement`.
+    itemElement.innerHTML = ` 
       <div class="item-details">
         <span class="item-name">${item.name}</span>
           <div class="item-controls">
@@ -340,15 +343,15 @@ function displayReceipt(receipt) {
       <span class="item-price">${item.price} SEK </span>
     `;
 
-    itemsContainer.appendChild(itemElement);
+    itemsContainer.appendChild(itemElement); // Add `itemElement` as a childelement of `itemsContainer`.
     }
   });
   
   // Calculate the total price.
-  const totalPrice = receipt.order.items.reduce((total, item) => total + item.price, 0);
+  const totalPrice = receipt.order.items.reduce((total, item) => total + item.price, 0); // totalPrice = receipt.order.items(all list in receipt), reduce(for calculate total price by start at 0)
   // Add total price to receipt.
   const totalElement = document.createElement("div");
-  totalElement.classList.add("total");
+  totalElement.classList.add("total"); // classList.add("total"): Add CSS class "total" to <div>.
   totalElement.innerHTML = `
     <div class="total-labels">
       <span> TOTALT </span>
@@ -358,9 +361,10 @@ function displayReceipt(receipt) {
     </div>
     <span class="total-price"> ${totalPrice.toFixed(2)} </span> SEK
   `;
-  itemsContainer.appendChild(totalElement);
+  itemsContainer.appendChild(totalElement); // `itemsContainer.appendChild(totalElement)` adds the total price to the items container.
 }
 
+// Functions for changing pages/display.
 function showCart() {
   document.querySelector(".page1-menu").style.display = "none";
   document.querySelector(".page2-shoppingCart").style.display = "block";
