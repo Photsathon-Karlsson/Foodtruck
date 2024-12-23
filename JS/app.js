@@ -55,34 +55,6 @@ fetchMenu();
 // registerTenant();
 
 // Function to display a menu on an HTML page.
-/*function renderMenu(menuData) { // Create "renderMenu" that uses menuData to show a menu on the screen.
-    const menuContainer = document.getElementById('menu-container'); 
-
-    // Remove old info & reset the internal HTML of the new menuContainer (adding an <h1> heading for the menu name & an empty <div>).
-    menuContainer.innerHTML = `
-        <h1 class="menu-title"> MENY </h1>
-        <div class="menu-section"></div>
-    `;
-    // Create "menuSection" for  display the menu items.
-    const menuSection = menuContainer.querySelector('.menu-section'); 
-
-    // Loop for menu.
-    menuData.forEach(item => {
-        // Create a new <li> element for each menu item. Add a menu-item class to <li>, <div>, & <p>.
-        const menuItem = document.createElement('li'); 
-        menuItem.classList.add('menu-item'); 
-        menuItem.innerHTML = `
-            <div class="item-header">
-                <span class="item-name">${item.name}</span>
-                <span class="item-price">${item.price} SEK</span>
-            </div>
-            <p class="item-description">${item.description}</p>
-        `;
-        menuSection.appendChild(menuItem);
-    });
-}*/
-
-// Function to display a menu on an HTML page.
 function renderMenu(menuData) {
     const foodMenu = document.getElementById('food-menu');
     const sauceMenu = document.getElementById('sauce-menu');
@@ -130,12 +102,8 @@ function renderMenu(menuData) {
         const itemName = menuItem.querySelector('.item-name');
         itemName.addEventListener('click', () => {
             // Add items in shopping cart. 
-              const existingItem = cart.find(i => i.id === item.id);
-              if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-              cart.push({ ...item, quantity: 1 });
-            }
+            cart.push(item);
+            console.log(cart);
             // Update items in shopping cart.
             updateCartDisplay(cart);
         });
@@ -195,10 +163,10 @@ function updateCartDisplay(cart) {
     const cartDetailsButton = document.getElementById('cart-details-button');
     
     // Show the total number of items in the cart.
-    const totalItems = cart.reduce((total, item) => total + (item.quantity || 1), 0);
+    const totalItems = cart.length;
 
     // Show/Hide the cart details button.
-    if (cart.length > 0) {
+    if (totalItems > 0) {
         cartItemCount.textContent = `${totalItems}`;
         cartItemCount.classList.add('have-items');
         cartDetailsButton.classList.remove('hidden');
@@ -214,21 +182,20 @@ function renderCartItems(cart) {
     const cartItemsList = document.querySelector('.cart-items');
     const totalPriceElem = document.querySelector('.total-price');    
 
-    // Combine the same items in the cart.
-    const uniqueCart = cart.reduce((acc, item) => { // Use "reduce function" to process items in shopping cart & make same chosen item into 1 list.
-      const existingItem = acc.find(i => i.id === item.id); // Check current item.
-      if (existingItem) {
-          existingItem.quantity += 1; // Add +1 for the same chosen item.
-      } else {
-          acc.push({ ...item, quantity: item.quantity || 1 }); // Add new item & quantity.
-      }
-      return acc; // accumulator (collect)
-  }, []);
-
     // Remove (old) items.
     cartItemsList.innerHTML = '';
+
+    // Create an array to count items by ID, using index as ID
+    const itemCounts = [];
+    cart.forEach(item => {
+        itemCounts[item.id] = (itemCounts[item.id] || 0) + 1;
+    });
+
     // Create (new) items.
-    uniqueCart.forEach(item => {
+    itemCounts.forEach((count, id) => {
+      if (count > 0) {
+        const item = cart.find(cartItem => cartItem.id === id);
+
         const cartItem = document.createElement('li'); // Creat new element <li> & keep it in variable "cartItem".
         cartItem.classList.add('cart-item');
 
@@ -236,14 +203,15 @@ function renderCartItems(cart) {
             <div>
                 <span class="item-name">${item.name}</span>
                   <div class="item-controls">
-                    <button class="control-button" data-action="increase" data-item="${item.name}"> + </button>
-                    <span class="item-quantity">${item.quantity} stycken </span>
-                    <button class="control-button" data-action="decrease" data-item="${item.name}"> - </button>
+                    <button class="control-button" data-action="increase" data-item="${item.id}"> + </button>
+                    <span class="item-quantity">${count} stycken </span>
+                    <button class="control-button" data-action="decrease" data-item="${item.id}"> - </button>
                   </div>
             </div>
             <span class="item-price">${item.price} SEK</span> 
         `;
         cartItemsList.appendChild(cartItem);
+      }
     });
 
     // Add Event Listener for (+ -) items. 
@@ -251,41 +219,34 @@ function renderCartItems(cart) {
     controlButtons.forEach(button => {
         button.addEventListener('click', (e) => {
             const action = e.target.getAttribute('data-action'); // Use "e.target" for get value of "data-action".
-            const itemName = e.target.getAttribute('data-item');
+            const itemId = e.target.getAttribute('data-item');
 
             // Check if the press +increases or -decreases the quantity of items.
             if (action === 'increase') {
-                changeItemQuantity(cart, itemName, 1);
+                changeItemQuantity(cart, itemId, 1);
             } else if (action === 'decrease') {
-                changeItemQuantity(cart, itemName, -1);
+                changeItemQuantity(cart, itemId, -1);
             }
         });
     });
 
     // Calculate the total price.
-    const totalPrice = cart.reduce((total, item) => total + (item.price * (item.quantity || 1)), 0);
+    const totalPrice = cart.reduce((total, item) => total + item.price, 0);
     totalPriceElem.textContent = totalPrice.toFixed(2); // Show the total price of the product with 2 decimal places (00.00 SEK).
 }
 
 // Change the quantity of items in shopping cart.
-function changeItemQuantity(cart, itemName, quantityChange) {
+function changeItemQuantity(cart, itemId, quantityChange) {
     // Find items in shopping cart.
-    const cartItem = cart.find(item => item.name === itemName);
+    const cartItem = cart.find(item => item.id == itemId);
     if (!cartItem) return; // If the product is not found, stop working.
 
-    // Update the current quantity of items (if none, start at 1).
-    let itemQuantity = cartItem.quantity || 1;  //should not have a field called quantity. This should be handled by checking the array and counting each instance with the same ID or Name for visualisation and each one should have it´s own element in the array to be able to order several of the same dish.
-    itemQuantity += quantityChange;
-
-    // Check if the quantity of the item is 0/less (then remove it from the cart).
-    if (itemQuantity <= 0) {
-        const index = cart.indexOf(cartItem);
-        if (index !== -1) {
-            cart.splice(index, 1); // Remove items from cart.
-        }
-    } else {
-        cartItem.quantity = itemQuantity; // Update new product quantity.
-    }
+    if (quantityChange > 0) {
+        cart.push(cartItem); // ถ้าเพิ่มสินค้า (+): เพิ่มออบเจกต์ใหม่ลงใน cart    
+    } else if (quantityChange < 0) {
+      const cartItemRemove = cart.indexOf(cartItem);
+        cart.splice(cartItemRemove, 1); // ถ้าลดสินค้า (-): ลบออบเจกต์แรกที่ตรงกับ cartItem
+  }
 
     // Refresh the display screen.
     renderCartItems(cart); // Show new products.
@@ -356,34 +317,35 @@ function displayReceipt(receipt) {
   // Reset old items in receipt.
   itemsContainer.innerHTML = "";
 
-  // Combine the same items in the cart.
-  const uniqueItems = receipt.order.items.reduce((acc, item) => {
-    const existingItem = acc.find((i) => i.id === item.id);
-    if (existingItem) {
-      existingItem.quantity += 1;
-    } else {
-      acc.push({ ...item, quantity: 1 });
-    }
-    return acc;
-  }, []);
+  // Create an array to count items by ID, using index as ID
+  const itemCounts = [];
+  receipt.order.items.forEach(item => {
+      itemCounts[item.id] = (itemCounts[item.id] || 0) + 1;
+  });
 
   // Add new items to receipt.
-  uniqueItems.forEach((item) => {
+  itemCounts.forEach((count, id) => {
+    if (count > 0) {
+    const item = receipt.order.items.find(item => item.id === id);
+
     const itemElement = document.createElement("div");
     itemElement.classList.add("item");
     itemElement.innerHTML = `
       <div class="item-details">
         <span class="item-name">${item.name}</span>
           <div class="item-controls">
-            <span class="item-quantity">${item.quantity} stycken </span>
+            <span class="item-quantity">${count} stycken </span>
           </div>
       </div>
       <span class="item-price">${item.price} SEK </span>
     `;
 
     itemsContainer.appendChild(itemElement);
+    }
   });
   
+  // Calculate the total price.
+  const totalPrice = receipt.order.items.reduce((total, item) => total + item.price, 0);
   // Add total price to receipt.
   const totalElement = document.createElement("div");
   totalElement.classList.add("total");
@@ -394,7 +356,7 @@ function displayReceipt(receipt) {
           <span class="tax"> inkl 20% moms </span>
         </div>
     </div>
-    <span class="total-price"> ${receipt.order.orderValue} </span> SEK
+    <span class="total-price"> ${totalPrice.toFixed(2)} </span> SEK
   `;
   itemsContainer.appendChild(totalElement);
 }
