@@ -297,7 +297,7 @@ function displayReceipt(receipt) {
   if (timeDifference > 0) { // timeDifference > 0 = ETA is not the current time yet.
     // Convert milliseconds to minutes & seconds.
     const minutes = Math.floor(timeDifference / 60000); // 1 minute = 60000 ms (minutes = the number of "minutes" by dividing milliseconds by 60000 (because 1 minute = 60000 milliseconds)).
-    const seconds = Math.floor((timeDifference % 60000) / 1000); // Remaining seconds (seconds = the "seconds remaining" after dividing the integer number of minutes.).
+    const seconds = Math.floor((timeDifference % 60000) / 1000); // Remaining seconds (seconds = the "seconds remaining" after  dividing the integer number of minutes.).
 
     // Display the result in "minutes.seconds" format.
     eta.textContent = `ETA ${minutes} MINS ${seconds} SECONDS`; // Ex. "ETA 3 MINS 20 SECONDS".

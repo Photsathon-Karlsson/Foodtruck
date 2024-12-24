@@ -2,7 +2,7 @@
 <!-- 
 Inlämningsuppgift - Foodtruck: Yum yum gim me sum | FED24
 GitHub : https://github.com/KoiOriginal/Foodtruck
-Web : 
+Web : https://koioriginal.github.io/Foodtruck/
 -->
 
 
