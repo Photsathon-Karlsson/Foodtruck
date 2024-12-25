@@ -111,6 +111,188 @@
     }
 }
 
+@media (max-width: 450px) and (min-width: 301px) {
+    /* General styles */
+    body {
+        padding: 10px;
+        font-size: 14px; 
+    }
+
+    .header-background {
+        height: 150px;
+        background-position: center;
+        background-size: cover;
+        text-align: center;
+        padding: 15px;
+        font-size: 16px; 
+    }
+
+    /* ********** Page 1 : Menu ********** */
+    .page1-menu {
+        width: 100%;
+        display: grid;
+        place-items: center;
+        color: white;
+        padding: 10px;
+    }
+    #menu-container {
+        background-color: #489078;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        padding: 15px;
+        margin: 10px;
+        list-style-type: none;
+        width: 100%;
+    }
+    #menu-container h2 {
+        margin: 10px 0;
+        font-size: 16px;
+    }
+    .menu-section ul {
+        list-style: none;
+    }
+    .menu-item {
+        background-color: #444;
+        border-radius: 6px;
+        padding: 8px;
+        margin-bottom: 8px;
+        font-size: 12px; 
+    }
+    .item-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .item-description {
+        font-size: 10px;
+        margin-top: 5px;
+    }
+    #sauce-menu, #drink-menu {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    /* Shopping cart */
+    #cart-count img {
+        width: 40px;
+        height: 40px;
+        margin: 5px;
+    }
+    #cart-count {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 5px;
+    }
+    #cart-item-count {
+        font-size: 12px;
+        width: 22px;
+        height: 22px;
+        padding: 3px;
+        text-align: center;
+    }
+    #cart-details-button {
+        background-color: #489078;
+        border: none;
+        padding: 5px 10px;
+    }
+    #food-menu:hover, #sauce-menu:hover, #drink-menu:hover {
+        cursor: pointer;
+    }
+
+    /* ********** Page 2 : Shopping Cart ********** */
+    .page2-shoppingCart {
+        padding: 15px;
+        font-family: Arial, sans-serif;
+        background-color: #f7f7f7;
+    }
+    .cart-container {
+        width: 100%;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+    .cart-header {
+        background-color: #f0f0f0;
+        padding: 8px;
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid #ddd;
+    }
+    .cart-items li {
+        font-size: 12px;
+        padding: 8px;
+    }
+    .item-name {
+        font-size: 14px;
+    }
+    .control-button {
+        width: 18px;
+        height: 18px;
+    }
+    .cart-footer {
+        padding: 10px;
+        background-color: #f0f0f0;
+    }
+    .checkout-button {
+        font-size: 12px;
+        padding: 8px 15px;
+        width: 100%;
+    }
+
+    /* ********** Page 3 : Order ********** */
+    .page3-order .container {
+        width: 100%;
+        padding: 15px;
+        margin: 0;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    .image img {
+        width: 100%;
+        height: auto;
+    }
+    .page3-order h1 {
+        font-size: 18px;
+    }
+    .page3-order button {
+        width: 100%;
+        padding: 10px 12px;
+        font-size: 14px;
+        margin-top: 10px;
+    }
+
+    /* ********** Page 4 : Receipt ********** */
+    .receipt {
+        width: 100%;
+        padding: 15px;
+    }
+    .receipt-number {
+        font-size: 14px;
+        color: #333;
+        font-weight: bold;
+        margin: 10px;
+        text-align: center;
+    }
+    .items {
+        margin-bottom: 10px;
+    }
+    .item {
+        font-size: 12px;
+        margin-bottom: 5px;
+        border-bottom: 1px dashed #ccc;
+    }
+    .new-order-button {
+        font-size: 14px;
+        padding: 10px;
+        width: 100%;
+    }
+}
+
 /* General design */
 * {
     margin: 0;
@@ -166,6 +348,7 @@ body {
     border-radius: 6px;
     padding: 10px;
     margin-bottom: 10px;
+    
 }
 .item-header {
     display: flex;
