@@ -327,19 +327,23 @@ body {
     display: grid;
     place-items: center;
     color: white;
+    margin: 20px;
 }
 #menu-container {
     background-color: #489078;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     padding: 20px;
-    max-width: 400px;
+   
     margin: 0 auto;
     list-style-type: none;
 }
 #menu-container h2 {
     font-size: 24px;
     margin-bottom: 15px;
+}
+.menu-section h2 {
+    margin: 20px;
 }
 .menu-section {
     margin-bottom: 20px;
@@ -377,9 +381,7 @@ body {
 }
 .menu-item, #sauce-menu, #drink-menu { /* color - background container */
     background-color: #605758;
-}
-#sauce-menu li, #drink-menu li { /* color - background container */
-    background-color: #837e7b;
+    border-radius: 10px;
 }
 .menu-item:hover, #sauce-menu li:hover, #drink-menu li:hover { /* color - background container */
     background-color: #353130;
@@ -394,6 +396,10 @@ body {
     font-size: 12px;
     margin-top: 5px;
 }
+/* sauce-menu & drink-menu */
+#sauce-menu li, #drink-menu li { /* color - background container */
+    background-color: #837e7b;
+}
 #sauce-menu, #drink-menu {
     display: flex;
     flex-wrap: wrap;
@@ -401,6 +407,7 @@ body {
     padding: 10px; 
     margin: 10px; 
 }
+/* food-menu */
 #food-menu {
     padding: 0; 
     margin: 0; 
@@ -412,7 +419,6 @@ body {
     line-height: 1; 
     display: block; 
 }
-
 /* shopping cart */
 #cart-count {
     position: relative; /* ทำให้ #cart-item-count อ้างอิงตำแหน่งจาก #cart-count */
