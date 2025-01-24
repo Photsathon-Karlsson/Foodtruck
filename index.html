@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -8,10 +9,6 @@
     <script type="module" src="JS/app.js"></script>
     </head>
 <body>
-    <header class="header-background">
-        <h1> Välkommen till Yum yum gim me sum </h1>
-    </header>
-
     <!-- Page 1 : Menu -->
     <section class="page1-menu">
         <div id="menu-container">
@@ -22,22 +19,27 @@
                 <img src="IMG/cart btn.svg" alt="shoppingCart">
                 </button>
                 <span id="cart-item-count"></span> <!-- Number of chosen items -->
-            </div>    
+            </div> 
             <!-- Menu list -->
             <div class="menu-section">
                 <!-- Part 1: Food -->
-                <h2 class="foods-title"> MENY </h2>
-                <ul id="food-menu"></ul>
+                <h1 class="foods-title"> MENY </h1>
+                <div class="food-menu-list">
+                    <ul id="food-menu"> wonton </ul>
+                </div>
                 <!-- Part 2: Sauces -->
-                <h2 class="sauces-title"> DIPSÅS ............... 19 SEK </h2>
-                <p id="sauce-menu"></p>
+                <div class="menu-sauces"> 
+                    <h2 class="sauces-title"> DIPSÅS .................... 19 SEK </h2>
+                    <p id="sauce-menu"> dip </p>
+                </div>
                 <!-- Part 3: Drinks -->
-                <h2 class="drinks-title"> DRICKA ............... 19 SEK </h2>
-                <p id="drink-menu"></p>
+                <div class="menu-drinks">
+                    <h2 class="drinks-title"> DRICKA .................... 19 SEK </h2>
+                    <p id="drink-menu"> drink </p>
+                </div>
             </div>
         </div>
     </section> 
-    
     <!-- Page 2 : Shopping Cart -->
     <section class="page2-shoppingCart hidden">
         <div class="cart-container">
@@ -51,15 +53,14 @@
             <div class="cart-footer">
                 <div class="total">
                     <span class="total-title"> TOTALT </span> 
-                    <span class="total-price"> 0 </span> SEK   
-                    <span class="item-quantity"></span>        
+                    <span class="total-price"> 0 </span> SEK      
                 </div>
+                <span class="item-quantity"></span> 
                 <span class="tax-info"> inkl 20% moms </span> <!-- Tax info -->
-                <button class="checkout-button"> TAKE MY MONEY! </button>
             </div>
+            <button class="checkout-button"> TAKE MY MONEY! </button>
         </div>
     </section>
-
     <!-- Page 3 : Order -->
     <section class="page3-order hidden">
         <div class="container">
@@ -75,7 +76,6 @@
             </div>
         </div>   
     </section>
-
     <!-- Page 4 : Receipt -->
     <section class="page4-receipt hidden">
         <div class="receipt">

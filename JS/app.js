@@ -208,7 +208,7 @@ function renderCartItems(cart) {
                     <button class="control-button" data-action="decrease" data-item="${item.id}"> - </button>
                   </div>
             </div>
-            <span class="item-price">${item.price} SEK</span> 
+            <span class="item-price">${item.price} SEK </span> 
         `;
         cartItemsList.appendChild(cartItem);
       }
