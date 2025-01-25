@@ -99,13 +99,12 @@ function renderMenu(menuData) {
         `;
 
         // Add event listener for items.
-        const itemName = menuItem.querySelector('.item-name');
-        itemName.addEventListener('click', () => {
-            // Add items in shopping cart. 
-            cart.push(item);
-            console.log(cart);
-            // Update items in shopping cart.
-            updateCartDisplay(cart);
+        menuItem.addEventListener('click', () => {
+          // Add items in shopping cart. 
+          cart.push(item);
+          console.log(cart);
+          // Update items in shopping cart.
+          updateCartDisplay(cart);
         });
 
         // Fix 3 menu groups.
@@ -120,15 +119,16 @@ function renderMenu(menuData) {
 
     // Event listener to show Page 2 when clicking Shopping Cart details button.
     cartDetailsButton.addEventListener('click', () => {
+      if (cart.length === 0) return; // If the shopping cart is empty, stop working.
         showCart(); // Show the shopping cart.
         renderCartItems(cart); // Render the shopping cart details on Page 2.
     });
 
     // Event listener to show Page 1 when clicking the "Back" button.
-    const backButton = document.querySelector('.closeCart');
-    backButton.addEventListener('click', () => {
-      showMenu(); // Show the shopping cart.
-  });
+    // const backButton = document.querySelector('.closeCart');
+    // backButton.addEventListener('click', () => {
+      // showMenu(); // Show the shopping cart.
+    // });
 
     // Event listener to show Page 3 when clicking the "Order" button.
     const orderButton = document.querySelector('.checkout-button');
@@ -160,7 +160,7 @@ function renderMenu(menuData) {
 // Update the display of the shopping cart.
 function updateCartDisplay(cart) {
     const cartItemCount = document.getElementById('cart-item-count');
-    const cartDetailsButton = document.getElementById('cart-details-button');
+    const cartDetailsButton = document.getElementById('cart-details-button'); // *cart
     
     // Show the total number of items in the cart.
     const totalItems = cart.length;
@@ -169,11 +169,11 @@ function updateCartDisplay(cart) {
     if (totalItems > 0) {
         cartItemCount.textContent = `${totalItems}`;
         cartItemCount.classList.add('have-items');
-        cartDetailsButton.classList.remove('hidden');
+        cartDetailsButton.classList.remove('hidden'); // *cart
     } else {
         cartItemCount.textContent = '';
         cartItemCount.classList.remove('have-items');
-        cartDetailsButton.classList.add('hidden');
+        cartDetailsButton.classList.add('hidden'); // *cart
     }
 }
 
@@ -237,21 +237,23 @@ function renderCartItems(cart) {
 
 // Change the quantity of items in shopping cart.
 function changeItemQuantity(cart, itemId, quantityChange) {
-    // Find items in shopping cart.
-    const cartItem = cart.find(item => item.id == itemId);
-    if (!cartItem) return; // If the product is not found, stop working.
-
-    if (quantityChange > 0) {
-        cart.push(cartItem); // If add items (+) will put new object (new item) in shopping cart.    
-    } else if (quantityChange < 0) {
-      const cartItemRemove = cart.indexOf(cartItem);
-        cart.splice(cartItemRemove, 1); // If remove item (-) remove first object that it's the same as cartItem.
+  // Find items in shopping cart.
+  const cartItem = cart.find(item => item.id == itemId);
+  if (!cartItem) return; // If the product is not found, stop working.
+  if (quantityChange > 0) {
+      cart.push(cartItem); // If add items (+) will put new object (new item) in shopping cart.    
+  } else if (quantityChange < 0) {
+    const cartItemRemove = cart.indexOf(cartItem);
+      cart.splice(cartItemRemove, 1); // If remove item (-) remove first object that it's the same as cartItem.
+}
+  if (cart.length === 0) {
+      showMenu(); // If the shopping cart is empty, show the menu.
   }
 
-    // Refresh the display screen.
-    renderCartItems(cart); // Show new products.
-    updateCartDisplay(cart); // Update new info.
-    console.log(cart);
+  // Refresh the display screen.
+  renderCartItems(cart); // Show new products.
+  updateCartDisplay(cart); // Update new info.
+  console.log(cart);
 }
 
 // Function to submit order.
