@@ -14,6 +14,7 @@ body {
     align-items: center; 
     justify-content: center;  
 }
+
 /* Page 1 : Menu */
 .page1-menu {
     background-color: #489078;
@@ -29,7 +30,14 @@ body {
 .item-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+}
+.item-price {
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+}
+.item-ingredients {
+    margin: 15px;
 }
 .sauces-title {
     display: flex;
@@ -263,10 +271,12 @@ body {
 .checkout-button:hover {
     background-color: #555;
 }
-/* ********** Page 3 : Order ********** */
+/* Page 3 : Order */
+.page3-order {
+    width: 50%;
+}
 .page3-order .container {
-    background-color: #403d3d;
-    width: 320px;
+    background-color: #605758;
     padding: 20px;
     margin: 20px;
     border-radius: 10px;
@@ -297,14 +307,14 @@ body {
     cursor: pointer;
 }
 .page3-order .receipt-button {
-    background-color: #403d3d;
+    background-color: #605758;
     color: white;
     font-weight: bold;
     margin-bottom: 10px;
     border: 2px solid white;
 }
 .page3-order .new-order-button {
-    background-color: rgb(26, 23, 23);
+    background-color: #353130;
     color: white;
     font-weight: bold;
     padding: 15px;
