@@ -126,6 +126,7 @@ body {
 #cart-details-button:hover {
     cursor: pointer;
 }
+
 /* Page 2 : Shopping Cart */
 .page2-shoppingCart {
     display: flex;
@@ -271,6 +272,7 @@ body {
 .checkout-button:hover {
     background-color: #555;
 }
+
 /* Page 3 : Order */
 .page3-order {
     width: 50%;
@@ -320,21 +322,24 @@ body {
     padding: 15px;
 }
 
-/* ********** Page 4 : Receipt ********** */
+/* Page 4 : Receipt */
 .page4-receipt {
     justify-content: center;
     align-items: center;
     text-align: center; 
+    width: 50%;
+    background-color: #605758;
 }
 .logo {
     text-align: center;
 }
 .receipt {
-    width: 300px;
     background-color: #fff;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 30px 10px 30px 10px; /* Top-Right-Bottom-Left  */
+    padding: 29px 10px 10px 10px;
 }
 .receipt-number {
     font-size: 16px;
@@ -354,11 +359,19 @@ body {
     margin-bottom: 10px;
     border-bottom: 1px dashed #ccc;
 }
-.total {
+.page4-receipt .item-name {
+    margin-bottom: 0%;
+}
+.page4-receipt .item-controls {
+    margin: 0 0 0 15px; /* Top-Right-Bottom-Left  */
+    padding: 0%;
+}
+.page4-receipt .total {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    background-color: #c2c0c1;
 }
 .new-order-button {
     background-color: #333;
@@ -366,14 +379,126 @@ body {
     border: none;
     border-radius: 4px;
     padding: 10px;
-    font-size: 16px;
+    margin: 0 10px 10px 10px;
+    font-size: large;
     cursor: pointer;
-    text-align: center;
-    width: 100%;
+    width: 97%;
 }
 .new-order-button:hover {
     background-color: #555;
 }
 .hidden {
   display: none;
+}
+
+
+/* Responsive design for min 390px to max 1200px */
+@media (min-width: 390px) and (max-width: 1200px) {
+    body {
+        padding: 10px;
+    }
+    /* page 1 */
+    .page1-menu, .page2-shoppingCart, .page3-order, .page4-receipt {
+        width: 90%; 
+    }
+    .menu-section, .food-menu-list ul {
+        padding: 0 10px;
+    }
+    .item-header, .item-price, .item-ingredients, .sauces-title {
+        flex-wrap: wrap; 
+        justify-content: space-between;
+    }
+    .item-ingredients {
+        max-width: 100%; 
+        word-wrap: break-word; 
+        overflow-wrap: break-word; 
+        overflow: hidden; 
+        box-sizing: border-box; 
+        margin-top: 0%;
+    }
+    .sauces-title, .drinks-title {
+        font-size: medium;
+    }
+    #cart-count {
+        position: relative; 
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 10px;
+        margin: 10px;
+        border-radius: 5px;
+        width: auto;
+        color: black;
+    }
+    #cart-count img {
+        width: 50px;
+        height: 50px;
+        margin: 5px;
+        background-color: lightgray;
+        border-radius: 3px;
+    }
+    #cart-item-count {
+        position: absolute; 
+        top: -5px; 
+        right: -5px; 
+        color: white; 
+        background-color: transparent; 
+        border-radius: 50%; 
+        padding: 5px; 
+        width: 25px; 
+        height: 25px; 
+        display: flex; 
+        justify-content: center;
+        align-items: center; 
+        font-size: 12px; 
+        font-weight: bold; 
+        transition: background-color 0.3s ease; 
+    }
+    #cart-item-count.have-items {
+        background-color: red; 
+    }
+    #cart-count img:active {
+        animation: bounce 0.3s ease;
+    }
+    #cart-details-button {
+        background-color: #489078;
+        border: none;
+    }
+    #cart-details-button:hover {
+        cursor: pointer;
+    }
+    .checkout-button {
+        width: 100%; 
+    }
+    .new-order-button {
+        width: 100%;
+        font-size: medium;
+    }
+    .total {
+        flex-wrap: wrap;
+        padding: 5px 10px; 
+    }
+    .total-price, .tax-info {
+        font-size: 14px;
+    }
+    /* page 2 */
+    .checkout-button, .page3-order .new-order-button {
+        width: 93%;
+    }
+    /* page3 */
+    .page3-order .container, .page4-receipt .receipt {
+        margin: 10px;
+        padding: 15px;
+    }
+    /* page 4 */
+    .page4-receipt .total {
+        margin-top: 20px;
+        padding: 10px;
+    }
+    .page4-receipt .new-order-button {
+        width: 90%;
+    }
+    .page4-receipt .item-price {
+        margin-top: 15px;
+    }
 }
