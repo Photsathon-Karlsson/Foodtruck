@@ -391,16 +391,15 @@ body {
   display: none;
 }
 
-
 /* Responsive design for min 390px to max 1200px */
 @media (min-width: 390px) and (max-width: 1200px) {
     body {
         padding: 10px;
     }
-    /* page 1 */
     .page1-menu, .page2-shoppingCart, .page3-order, .page4-receipt {
         width: 90%; 
     }
+    /* page 1 */
     .menu-section, .food-menu-list ul {
         padding: 0 10px;
     }
